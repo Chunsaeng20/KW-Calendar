@@ -1,14 +1,16 @@
-# Welcome to OSS2023 TEAM 13
+# Welcome to OSS2023 Team 13
 
 Kwangwoon University Open Source Software 2023 Team 13 <br/>
 광운대학교 오픈소스소프트웨어설계및실습 2023 13조
 
-Welcome to the OSS2023 TEAM13's Project source code!
+Welcome to the OSS2023 Team 13's Project source code!
+
 OSS2023 13조의 프로젝트 소스코드입니다!
 
 ## Title
 
 KW-Calendar
+
 광운 캘린더
 
 ## Abstract
