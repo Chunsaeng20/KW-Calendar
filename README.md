@@ -48,7 +48,7 @@ Example image "Google Calendar"
 - 김범준 : 
 - 이홍일 : 
 - 정해성 : 캘린더 일정에 적힌 교실을 지도로 보여주는 기능 구현
-- 최성윤 : 
+- 최성윤 : 캘린더에 일정을 추가및 삭제하는 기능
 
 ## Requirements
 
