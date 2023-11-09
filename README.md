@@ -34,7 +34,7 @@ KW-Calendar
 Example image "Google Calendar"
 
 예시 이미지 "구글 캘린더"
- 
+
 ## Project schedule
 
 - Week 10 (11/03 ~ 11/09) : Planning
@@ -45,7 +45,7 @@ Example image "Google Calendar"
 
 ## Team roles & development areas
 
-- 김범준 : 
+- 김범준 : To Do List와 연계하여 학습 일정을 managing 해주는 기능 및 알림과 관련된 UI 및 기능 구현
 - 이홍일 : 캘린더에 과제 관련 To Do List 작성 및 해당 To Do List의 체크 박스에 완료 여부를 체크하면 사이드 이미지로 간략한 과제 관련 진행률을 보여주는 기능
 - 정해성 : 캘린더 일정에 적힌 교실을 지도로 보여주는 기능 구현
 - 최성윤 : 캘린더에 일정을 추가및 삭제하는 기능
