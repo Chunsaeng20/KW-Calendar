@@ -42,8 +42,7 @@ Example image "Google Calendar"
 
 - 김범준 : 
 - 이홍일 : 
-- 정해성 : function that shows the location of the classroom which is written in the calendar
-캘린더 일정에 적힌 교실을 지도 이미지로 보여주는 기능 구현
+- 정해성 : 캘린더 일정에 적힌 교실을 지도 이미지로 보여주는 기능 구현
 - 최성윤 : 
 
 ## Requirements
