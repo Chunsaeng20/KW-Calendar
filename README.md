@@ -8,6 +8,10 @@ Welcome to the OSS2023 Team 13's Project source code!
 
 OSS2023 13조의 프로젝트 소스코드입니다!
 
+With the code in this repository, you can build the calendar webpage including a variety of functions.
+
+이 레포지토리의 코드로 다양한 기능이 들어있는 캘린더 웹페이지를 만들 수 있습니다.
+
 ## Title
 
 KW-Calendar
@@ -16,11 +20,12 @@ KW-Calendar
 
 ## Abstract
 
-With the code in this repository, you can build the calendar webpage including a variety of functions.
+본 프로젝트는 광운대 학생들에게 특화된 일정 관리 웹페이지를 만드는 것을 목표로 한다. 
 
-이 레포지토리의 코드로 다양한 기능이 들어있는 캘린더 웹페이지를 만들 수 있습니다.
+우리 조는 일정 관리 웹페이지 구현을 프로젝트로 정하고, 기존의 일반적인 일정 관리 웹페이지에서 더 나아가 사용자 특화에 중점을 두고
+광운대학교 학생이 유용하게 사용할만한 기능을 구현하고자 한다.
 
-만들어진 웹페이지에서는 일정 관리, 일정 예약 알림, 과제 알림, 유용한 웹사이트 추천 등의 기능을 사용할 수 있습니다.
+만들어진 웹페이지에서는 일정 관리, 일정 예약 알림, 과제 알림, 유용한 웹사이트 추천 등의 기능을 사용할 수 있다.
 
 ## Example image
 
@@ -42,7 +47,7 @@ Example image "Google Calendar"
 
 - 김범준 : 
 - 이홍일 : 
-- 정해성 : 캘린더 일정에 적힌 교실을 지도 이미지로 보여주는 기능 구현
+- 정해성 : 캘린더 일정에 적힌 교실을 지도로 보여주는 기능 구현
 - 최성윤 : 
 
 ## Requirements
@@ -51,7 +56,7 @@ Example image "Google Calendar"
 - HTML
 - CSS
 
-### Prerequisite
+## Prerequisite
 
 None. For now.
 
