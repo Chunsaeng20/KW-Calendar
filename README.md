@@ -38,10 +38,10 @@ Example image "Google Calendar"
 ## Project schedule
 
 - Week 10 (11/03 ~ 11/09) : Planning
-- Week 11 (11/10 ~ 11/16) : HTML/CSS
-- Week 12 (11/17 ~ 11/23) : JavaScript
-- Week 13 (11/24 ~ 11/30) : JavaScript
-- Week 14 (12/01 ~ 12/07) : Testing
+- Week 11 (11/10 ~ 11/16) : 디자인 정하기
+- Week 12 (11/17 ~ 11/23) : 틀 짜기
+- Week 13 (11/24 ~ 11/30) : 로직 구현
+- Week 14 (12/01 ~ 12/07) : 검증 및 마무리
 
 ## Team roles & development areas
 
@@ -58,7 +58,9 @@ Example image "Google Calendar"
 
 ## Prerequisite
 
-Web browser. Chrome recommended.
+* Web browser. Chrome recommended.
+
+* Internet connection needed.
 
 ## License
 This source code is under MIT License
