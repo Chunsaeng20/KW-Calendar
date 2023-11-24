@@ -1,0 +1,185 @@
+/* Outer box */
+.outer-box {
+    max-width: 1000px;
+    text-align: center;
+    position: relative;
+    margin: 0 auto;
+    overflow: hidden;
+    border-radius: 5px;
+    box-shadow: 0px 19px 27px -20px rgba(0, 0, 0, 0.16); }
+
+/* Left side */
+.wrap-info {
+    position: relative;
+    width: 25%;
+    z-index: 0; }
+    .wrap-info:after {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        content: '';
+        background: #000; 
+        opacity: .5;
+        z-index: -1; }
+        @media (max-width: 1200px) {
+            .wrap-info {
+                width: 100%;
+                padding: 20px 0; } }
+
+/* Right side */
+.wrap-tips {
+    visibility: hidden;
+    position: absolute;
+	opacity: 0;
+    width: 20%;
+    z-index: 0; }
+    .wrap-tips:after {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        content: '';
+        background: #000;
+        opacity: .5;
+        z-index: -1; }
+        @media (max-width: 1200px) {
+            .wrap-tips {
+                width: 100%;
+                padding: 20px 0; } }
+
+/* Side box */
+.info {
+    width: 100%;
+    position: relative; }
+
+.info-today {
+    width: 100%;
+    padding-top: 0%;
+    position: relative; 
+    background: #000; }
+
+.info-day {
+    padding-bottom: 1rem;
+    font-size: 9rem;
+    line-height: 1;
+    color: #fff; }
+    
+.info-month {
+    padding-top: 2rem;
+    font-size: 2rem;
+    line-height: 1;
+    color: #fff;
+    font-size: 16px;
+    text-transform: uppercase;
+    font-weight: 300; }
+
+.info-progress {
+    width: 100%;
+    position: relative;
+    background: darkcyan; 
+    text-transform: uppercase; }
+
+.info-progress-heading {
+    padding-top: 0.5rem;
+    width: 100%;
+    font-weight: bold;
+    position: relative; }
+
+/* Button */
+.wrap-button {
+    position: relative;
+    padding: 10px 0; }
+    .button-wrap .pre-button, .button-wrap .next-button {
+        cursor: pointer;
+        width: 1rem;
+        height: 1rem;
+        line-height: 1rem;
+        border-radius: 50%;
+        position: absolute;
+        top: 0;
+        font-size: 18px; }
+        .button-wrap .pre-button i, .button-wrap .next-button i {
+        color: #cccccc; }
+        .button-wrap .pre-button {
+            left: 20px; }
+        .button-wrap .next-button {
+            right: 20px; }
+
+/* Calendar side*/
+.wrap-calendar {
+    width: 75%;
+    background: #fff;
+    padding: 20px 20px 20px 20px; }
+    @media (max-width: 1200px) {
+        .wrap-calendar {
+        width: 100%; } }
+
+/* Calendar table */
+#calendar {
+  width: 100%; }
+
+#calendar tr {
+  height: 5rem; }
+
+tbody tr {
+  color: #000; }
+
+tbody td {
+  width: 14%;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.2s ease-in;
+  position: relative;
+  z-index: 0; }
+  tbody td:after {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    content: '';
+    width: 66px;
+    height: 66px;
+    margin: 0 auto;
+    transform: translateY(-50%);
+    border-radius: 25%;
+    transition: 0.3s;
+    z-index: -1; }
+    @media (prefers-reduced-motion: reduce) {
+        tbody td:after {
+          transition: none; } }
+
+tbody td:hover, .selected {
+  color: #fff;
+  border: none; }
+  tbody td:hover:after, .selected:after {
+    background: sienna; }
+
+tbody td:active {
+  transform: scale(0.7); }  
+
+/* Today button */
+#reset {
+    display: block;
+    position: absolute;
+    right: 0.5rem;
+    top: 0.5rem;
+    z-index: 999;
+    color: rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+    padding: 0 0.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    font-size: 14px; }
+
+#reset:hover {
+    color: #fff;
+    border-color: #fff; }
+      
+#reset:active {
+    transform: scale(0.8); }
