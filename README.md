@@ -2,13 +2,13 @@
 
 Kwangwoon University Open Source Software 2023 Team 13
 
-광운대학교 오픈소스소프트웨어설계및실습 2023 13조
-
 Welcome to the OSS2023 Team 13's Project source code!
 
-OSS2023 13조의 프로젝트 소스코드입니다!
-
 With the code in this repository, you can build the calendar webpage including a variety of functions.
+
+광운대학교 오픈소스소프트웨어설계및실습 2023 13조
+
+OSS2023 13조의 프로젝트 소스코드입니다!
 
 이 레포지토리의 코드로 다양한 기능이 들어있는 캘린더 웹페이지를 만들 수 있습니다.
 
@@ -58,7 +58,7 @@ Example image "Google Calendar"
 
 ## Prerequisite
 
-None. For now.
+Web browser. Chrome recommended.
 
 ## License
 This source code is under MIT License
