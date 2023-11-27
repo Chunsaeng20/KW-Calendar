@@ -98,7 +98,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // -------------------------------------------------------------------------------------------------------
 
-    // 'calender 내부의 td element'에 대한 이벤트 처리기
+    // -------------------------------------------------------------------------------------------------------
+
+    // 이하 필요 기능 추가 작성.
     let calendarTable = document.querySelector('#calendar');
     calendarTable.addEventListener('click', (event) => {
         // 날짜가 없으면 반환
@@ -106,16 +108,51 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         else if (event.target.tagName === 'TD' && event.target.closest('#calendar')) {
-        // 클릭된 날짜 받아오기
-        let clickedDay = parseInt(event.target.textContent);
-        // info-day, info-month 업데이트
-        document.querySelector('.info-day').textContent   = clickedDay;
-        document.querySelector('.info-month').textContent = currMonth;
+            // 클릭된 날짜 받아오기
+            let clickedDay = parseInt(event.target.textContent);
+            // info-day, info-month 업데이트
+            document.querySelector('.info-day').textContent   = clickedDay;
+            document.querySelector('.info-month').textContent = currMonth;
+
+            // 선택된 날짜에 해당하는 to-do list 가져오기 (이 부분은 서버에서 데이터를 가져오는 로직이 들어가야 합니다.)
+            let selectedDate = `${currMonth} ${clickedDay}, ${currYear}`;
+
+            // 팝업에 날짜 업데이트
+            document.getElementById('selected-date-popup').textContent = selectedDate;
+
+            // 팝업 표시
+            document.getElementById('to-do-popup').style.display = 'block';
+
+            // To-Do List 표시 로직 추가 (이 부분도 서버에서 데이터를 가져오는 로직이 필요합니다.)
+            // 아래는 예시 코드이므로 실제 데이터 연동을 위해서는 서버와의 통신 등이 필요합니다.
+            let toDoListItems = ["Task 1", "Task 2", "Task 3"];
+            let toDoList = document.getElementById('to-do-items-popup');
+            toDoList.innerHTML = '';
+            toDoListItems.forEach((item) => {
+                let li = document.createElement('li');
+                li.textContent = item;
+                toDoList.appendChild(li);
+            });
+
+            // Add Task 버튼에 대한 이벤트 처리기
+            document.getElementById('add-task-btn-popup').addEventListener('click', () => {
+                let newTask = document.getElementById('new-task-popup').value;
+                if (newTask.trim() !== '') {
+                    // 실제로 서버에 데이터를 추가하는 로직이 필요합니다.
+                    // 이 부분은 예시 코드로 실제로 동작하지 않습니다.
+                    toDoListItems.push(newTask);
+                    let li = document.createElement('li');
+                    li.textContent = newTask;
+                    toDoList.appendChild(li);
+                    document.getElementById('new-task-popup').value = '';
+                }
+            });
         }
     });
 
-    // -------------------------------------------------------------------------------------------------------
-
-    // 이하 필요 기능 추가 작성.
-
+    
 });
+
+function closePopup() {
+    document.getElementById('to-do-popup').style.display = 'none';
+}
