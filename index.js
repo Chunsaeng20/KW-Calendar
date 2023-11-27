@@ -106,16 +106,49 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         else if (event.target.tagName === 'TD' && event.target.closest('#calendar')) {
-        // 클릭된 날짜 받아오기
-        let clickedDay = parseInt(event.target.textContent);
-        // info-day, info-month 업데이트
-        document.querySelector('.info-day').textContent   = clickedDay;
-        document.querySelector('.info-month').textContent = currMonth;
+            // 클릭된 날짜 받아오기
+            let clickedDay = parseInt(event.target.textContent);
+            // info-day, info-month 업데이트
+            document.querySelector('.info-day').textContent   = clickedDay;
+            document.querySelector('.info-month').textContent = currMonth;
+            // 화면 바꾸기
+            flipWindowRight();
+            // Todo list 띄우기
+            let todoList = document.querySelector('.todo-list');
+            todoList.style.visibility = 'visible';
+            todoList.style.position   = 'static';
+            todoList.style.opacity    = 1;
         }
     });
 
     // -------------------------------------------------------------------------------------------------------
 
-    // 이하 필요 기능 추가 작성.
+    // 캘린더를 오른쪽으로 이동
+    function flipWindowRight () {
+        const selector = document.querySelector('.wrap-calendar');
+        selector.classList.remove('magictime', 'slideRightReturn');
+        selector.classList.add('magictime', 'slideRight');
+    }
+
+    // 캘린더를 왼쪽으로 이동
+    function flipWindowLeft () {
+        const selector = document.querySelector('.wrap-calendar');
+        selector.classList.remove('magictime', 'slideRight');
+        selector.classList.add('magictime', 'slideRightReturn');
+    }
+    // -------------------------------------------------------------------------------------------------------
+
+    // 'Close button'에 대한 이벤트 처리기
+    document.querySelector('#close-btn').addEventListener('click', () => {
+        // Todo list 끄기
+        let todoList = document.querySelector('.todo-list');
+        todoList.style.visibility = 'hidden';
+        todoList.style.position   = 'absolute';
+        todoList.style.opacity    = 0;
+        // 화면 바꾸기
+        flipWindowLeft();
+    });
+
+    // -------------------------------------------------------------------------------------------------------
 
 });
