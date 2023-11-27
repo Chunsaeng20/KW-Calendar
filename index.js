@@ -60,8 +60,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // 'TODAY button'에 대한 이벤트 처리기
     document.querySelector('#reset').addEventListener('click', () => {
         // 현재 날짜로 변수 업데이트
-        curDate = new Date();
-        curMonth = curDate.toLocaleString('en-US', { month: 'long' });
+        currDate  = new Date();
+        currMonth = currDate.toLocaleString('en-US', { month: 'long' });
+        currYear  = currDate.getFullYear();
         // 화면 업데이트
         document.querySelector('.info-month').textContent = currMonth;
         document.querySelector('.info-day').textContent   = currDay;
@@ -74,8 +75,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // 'Previous month button'에 대한 이벤트 처리기
     document.querySelector('#prev-btn').addEventListener('click', () => {
         // 변수 업데이트
-        currDate.setMonth(curDate.getMonth() - 1);
+        currDate.setMonth(currDate.getMonth() - 1);
         currMonth = currDate.toLocaleString('en-US', { month: 'long' });
+        currYear  = currDate.getFullYear();
         // 화면 업데이트
         document.querySelector('#head-month').textContent = currMonth + ' ' + currYear;
         updateCalendar();
@@ -88,6 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // 변수 업데이트
         currDate.setMonth(currDate.getMonth() + 1);
         currMonth = currDate.toLocaleString('en-US', { month: 'long' });
+        currYear  = currDate.getFullYear();
         // 화면 업데이트
         document.querySelector('#head-month').textContent = currMonth + ' ' + currYear;
         updateCalendar();
