@@ -12,7 +12,7 @@
 
 ### Project Screenshot
 
-![progress example image](/image/progress_example_image.png)
+![progress example image](/image/project_example_image.png)
 
 ## Individual Progress Status
 ### 김범준
