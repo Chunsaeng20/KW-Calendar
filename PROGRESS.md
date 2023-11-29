@@ -16,9 +16,9 @@
 
 ## Individual Progress Status
 ### 김범준
-* 
-* 
-* 
+* 캘린더 날짜 로직 구현 및 기본적인 Event Handler 작성 ([Commit Link](https://github.com/Chunsaeng20/KW-Calendar/commit/25681b908b9b11c0dce880e2d7111cc77f58073b))
+* 디자인 수정 ([Commit Link](https://github.com/Chunsaeng20/KW-Calendar/commit/25d7c3c5e2d6ce230a4f0971ebabb7c7e612371b))
+* 웹 스크래핑을 통한 KW Times의 article 제시 (구현중)
 
 ### 이홍일
 * 
