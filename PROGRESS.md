@@ -16,9 +16,9 @@
 
 ## Individual Progress Status
 ### 김범준
-* 
-* 
-* 
+* 캘린더 날짜 로직 구현 및 기본적인 Event Handler 작성 ([Commit Link](https://github.com/Chunsaeng20/KW-Calendar/commit/25681b908b9b11c0dce880e2d7111cc77f58073b))
+* 디자인 수정 ([Commit Link](https://github.com/Chunsaeng20/KW-Calendar/commit/25d7c3c5e2d6ce230a4f0971ebabb7c7e612371b))
+* 웹 스크래핑을 통한 KW Times의 article 제시 (구현중)
 
 ### 이홍일
 * 
@@ -33,4 +33,3 @@
 ### 최성윤
 * 캘린더의 각 날짜를 클릭시 to do list를 작성및 확인하는 창 구현(현재 저장 불러오기는 안됨) ([Commit Link](https://github.com/Chunsaeng20/KW-Calendar/commit/4f653fde4bca31a322d088b7357263734028c38d))
 * to do list의 저장 및 불러오기 기능 구현 예정
-* 
