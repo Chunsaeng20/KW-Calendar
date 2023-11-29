@@ -21,9 +21,9 @@
 * 웹 스크래핑을 통한 KW Times의 article 제시 (구현중)
 
 ### 이홍일
-* 
-* 
-* 
+* 캘린더 Todo List 작성 및 날짜 별 세이브 로드 기능 구현([Commit Link](https://github.com/Chunsaeng20/KW-Calendar/commit/b8ef2063f1bcadb7d7d0fc16f80c363b9c7285ae)
+* Todo List(Assignment) 밑에 과제 수행 간에 해야하는 더 작은 분류의 Todo List 추가 및 해당 Todo List check에 따른 과제 수행률 왼쪽 하단 표시 기능 (구현중)
+* Todo List 화면의 디자인 수정(예정)
 
 ### 정해성
 * 캘린더 웹페이지 틀 작성 ([Commit Link](https://github.com/Chunsaeng20/KW-Calendar/commit/c64fb9852897f507b338f46aa9825cd19363e0c5))
