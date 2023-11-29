@@ -31,6 +31,6 @@
 * 날짜 로직 구현 ([Commit Link](https://github.com/Chunsaeng20/KW-Calendar/commit/39e50e82a6929a4b268b48c99b508b653ddb2b56))
 
 ### 최성윤
-* 
-* 
+* 캘린더의 각 날짜를 클릭시 to do list를 작성및 확인하는 창 구현(현재 저장 불러오기는 안됨) ([Commit Link](https://github.com/Chunsaeng20/KW-Calendar/commit/4f653fde4bca31a322d088b7357263734028c38d))
+* to do list의 저장 및 불러오기 기능 구현 예정
 * 
