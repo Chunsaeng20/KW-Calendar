@@ -112,42 +112,89 @@ document.addEventListener('DOMContentLoaded', () => {
             document.querySelector('.info-day').textContent   = clickedDay;
             document.querySelector('.info-month').textContent = currMonth;
             // 화면 바꾸기
-            flipWindowRight();
+            slideWindowRight();
             // Todo list 띄우기
-            let todoList = document.querySelector('.todo-list');
-            todoList.style.visibility = 'visible';
-            todoList.style.position   = 'static';
-            todoList.style.opacity    = 1;
+            showOnTodolist();
+            // Tips 띄우기
+            showOnTips();
         }
     });
 
     // -------------------------------------------------------------------------------------------------------
 
     // 캘린더를 오른쪽으로 이동
-    function flipWindowRight () {
+    function slideWindowRight () {
         const selector = document.querySelector('.wrap-calendar');
         selector.classList.remove('magictime', 'slideRightReturn');
         selector.classList.add('magictime', 'slideRight');
+        setTimeout(() => {
+            selector.style.visibility = 'hidden';
+            selector.style.position   = 'absolute';
+            selector.style.opacity    = 0;
+        }, 1000);
     }
 
     // 캘린더를 왼쪽으로 이동
-    function flipWindowLeft () {
+    function slideWindowLeft () {
         const selector = document.querySelector('.wrap-calendar');
         selector.classList.remove('magictime', 'slideRight');
         selector.classList.add('magictime', 'slideRightReturn');
+        selector.style.visibility = 'visible';
+        selector.style.position   = 'relative';
+        selector.style.opacity    = 1;
     }
+
     // -------------------------------------------------------------------------------------------------------
 
-    // 'Close button'에 대한 이벤트 처리기
-    document.querySelector('#close-btn').addEventListener('click', () => {
-        // Todo list 끄기
+    // Todo list 띄우기
+    function showOnTodolist () {
+        let todoList = document.querySelector('.todo-list');
+        let selectorHeight = document.querySelector('.wrap-calendar').offsetHeight;
+        todoList.style.height     = selectorHeight + "px";
+        setTimeout(() => {
+            todoList.style.visibility = 'visible';
+            todoList.style.position   = 'static';
+            todoList.style.opacity    = 1;
+        }, 1000);
+    }
+
+    // Todo list 끄기
+    function showOffTodolist () {
         let todoList = document.querySelector('.todo-list');
         todoList.style.visibility = 'hidden';
         todoList.style.position   = 'absolute';
         todoList.style.opacity    = 0;
+    }
+
+    // 'Close button'에 대한 이벤트 처리기
+    document.querySelector('#close-btn').addEventListener('click', () => {
+        // Todo list 끄기
+        showOffTodolist();
         // 화면 바꾸기
-        flipWindowLeft();
+        slideWindowLeft();
+        // Tips 끄기
+        showOffTips();
     });
+
+    // -------------------------------------------------------------------------------------------------------
+
+    // Tips 띄우기
+    function showOnTips () {
+        let tips = document.querySelector('.wrap-tips');
+        let selectorHeight = document.querySelector('.wrap-calendar').offsetHeight;
+        tips.style.height     = selectorHeight + "px";
+        tips.style.visibility = 'visible';
+        tips.style.position   = 'static';
+        tips.style.opacity    = 1;
+    }
+
+    // Tips 끄기
+    function showOffTips () {
+        let tips = document.querySelector('.wrap-tips');
+        tips.style.visibility = 'hidden';
+        tips.style.position   = 'absolute';
+        tips.style.opacity    = 0;
+    }
 
     // -------------------------------------------------------------------------------------------------------
 

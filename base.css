@@ -1,3 +1,4 @@
+/* ====================================================================== */
 /* Outer box */
 .outer-box {
     max-width: 1000px;
@@ -6,9 +7,10 @@
     margin: 0 auto;
     overflow: hidden;
     border-radius: 5px;
+    background: #fff;
     box-shadow: 0px 19px 27px -20px rgba(0, 0, 0, 0.16); 
 }
-
+/* ====================================================================== */
 /* Left side */
 .wrap-info {
     position: relative;
@@ -31,32 +33,18 @@
         width: 100%;
         padding: 20px 0; } 
 }
-
+/* ====================================================================== */
 /* Right side */
 .wrap-tips {
+    right: 10px;
+    position: absolute;
     visibility: hidden;
-    position: absolute;
 	opacity: 0;
-    width: 20%;
-    z-index: 0; 
+    background: #fff;
+    border-radius: 10px;
+    z-index: 1;
 }
-.wrap-tips:after {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    content: '';
-    background: #000;
-    opacity: .5;
-    z-index: -1; 
-}
-@media (max-width: 1200px) {
-    .wrap-tips {
-        width: 100%;
-        padding: 20px 0; } 
-}
-
+/* ====================================================================== */
 /* Side box */
 .info {
     width: 100%;
@@ -103,15 +91,16 @@
     font-weight: bold;
     position: relative; 
 }
-
+/* ====================================================================== */
 /* Month button */
 .wrap-button {
     position: relative;
     padding: 10px 0; 
 }
-
+/* ====================================================================== */
 /* Todo list */
 .todo-list {
+    flex-grow: 1;
     width: 75%;
     background: #fff;
     padding: 20px 20px 20px 20px; 
@@ -124,6 +113,14 @@
     width: 100%; } 
 }
 
+.todo-list-heading {
+    padding-top: 0.5rem;
+    font-size: 16px;
+    text-transform: uppercase;
+    font-weight: bold;
+    position: relative; 
+}
+/* ====================================================================== */
 /* Calendar side */
 .wrap-calendar {
     width: 75%;
@@ -191,7 +188,7 @@ tbody td:hover:after, .selected:after {
 tbody td:active {
   transform: scale(0.7); 
 }  
-
+/* ====================================================================== */
 /* Today button */
 #reset {
     display: block;
@@ -217,3 +214,4 @@ tbody td:active {
 #reset:active {
     transform: scale(0.8); 
 }
+/* ====================================================================== */
