@@ -1,6 +1,11 @@
+let DATA={} ;
 document.addEventListener('DOMContentLoaded', () => {
     // 오늘 날짜 받아오기
-    let today = new Date();   
+    let today = new Date();  
+    const inputBox=document.querySelector('.input-box');
+    const inputBtn=document.querySelector('.input-btn');
+    const inputList=document.querySelector('.todoList');
+    let clickedDate;
 
     // 현재 날짜 받아오기
     let currDate  = new Date();
@@ -106,13 +111,18 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         else if (event.target.tagName === 'TD' && event.target.closest('#calendar')) {
-            // 클릭된 날짜 받아오기
             let clickedDay = parseInt(event.target.textContent);
+            // 클릭된 날짜 받아오기
+            event.target.classList.add('active');
+            currDate=new Date(currDate.getFullYear(),currDate.getMonth(),event.target.innerHTML);
+            clickedDate=currDate.toLocaleDateString('ko-KR',{year: 'numeric',month: '2-digit',day: '2-digit'});
             // info-day, info-month 업데이트
             document.querySelector('.info-day').textContent   = clickedDay;
             document.querySelector('.info-month').textContent = currMonth;
             // 화면 바꾸기
             slideWindowRight();
+            //클릭된 날짜의 Todo List로 업데이트
+            updateList();
             // Todo list 띄우기
             showOnTodolist();
             // Tips 띄우기
@@ -156,6 +166,7 @@ document.addEventListener('DOMContentLoaded', () => {
             todoList.style.position   = 'static';
             todoList.style.opacity    = 1;
         }, 1000);
+        
     }
 
     // Todo list 끄기
@@ -197,5 +208,76 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // -------------------------------------------------------------------------------------------------------
-
+    
+    function deleteTodo(E) {//Todo 삭제
+        E.preventDefault();
+        let delParentLi = E.target.parentNode;
+        inputList.removeChild(delParentLi);
+        if (!DATA[clickedDate] || !Array.isArray(DATA[clickedDate])) {
+            DATA[clickedDate] = [];
+        }
+        const cleanToDos = DATA[clickedDate].filter(function (todo) {
+            return todo.id !== parseInt(delParentLi.id);
+        });
+        DATA[clickedDate] = cleanToDos;
+        save();
+    }
+    inputBtn.addEventListener('click',function(E){ //Todo list 인풋 입력 이벤트 리스너
+        E.preventDefault();
+        let input=inputBox.value;
+        InsertTodo(input);
+    });
+    function InsertTodo(text){//Todo list에 삽입
+        let todo={
+            todo: text,
+        }
+        if(!DATA[clickedDate]){
+            DATA[clickedDate]=[];
+            DATA[clickedDate].push(todo);
+        }else{
+            DATA[clickedDate].push(todo);
+        }
+        const listE=document.createElement('li');
+        const spanE=document.createElement('span');
+        const deleteBtn=document.createElement('button');
+        deleteBtn.innerText="DEL";
+        deleteBtn.setAttribute('class','del-data');
+        spanE.innerHTML=text;
+        listE.appendChild(spanE);
+        listE.appendChild(deleteBtn);
+        inputList.appendChild(listE);
+        listE.setAttribute('id',DATA[clickedDate].length);
+        deleteBtn.addEventListener('click',deleteTodo);
+        todo.id=DATA[clickedDate].length;
+        save();
+        inputBox.value='';
+    }
+    function updateList(){ //선택된 날짜의 Todo List출력
+        let savedE=localStorage.getItem(clickedDate);
+        let listE=document.querySelectorAll('LI');
+            for(let i=0;i<listE.length;i++){
+                inputList.removeChild(listE[i])
+            }
+        if(savedE!==null){
+            const parsed=JSON.parse(localStorage.getItem(clickedDate));
+            parsed.forEach(function(Todo){
+                if(Todo){
+                    let li=document.createElement('li');
+                    let sp=document.createElement('span');
+                    let delbtn=document.createElement('button');
+                    delbtn.setAttribute('class','del-data');
+                    delbtn.innerText="DEL";
+                    li.setAttribute('id',Todo.id);
+                    sp.innerHTML=Todo.todo;
+                    li.appendChild(sp);
+                    li.appendChild(delbtn);
+                    inputList.appendChild(li);
+                    delbtn.addEventListener('click',deleteTodo);
+                }
+            });
+        }
+    }
+    function save(){ //로컬 스토리지 저장
+        localStorage.setItem(clickedDate,JSON.stringify(DATA[clickedDate]));
+    }
 });
