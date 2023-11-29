@@ -64,3 +64,5 @@ Example image "Google Calendar"
 
 ## License
 This source code is under MIT License
+
+magic.css is also under MIT License. You can see more information [here](https://github.com/miniMAC/magic)
