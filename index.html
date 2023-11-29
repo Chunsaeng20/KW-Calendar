@@ -28,24 +28,17 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     </head>
-
     <!-- Body -->
     <body style="background-color: #f8f9fd;">
-        <!-- JavaScript -->
-        <script src="index.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
-        
         <!-- Body -->
         <section style="padding: 4rem 0;">
             <div class="container">
                 <!-- Header -->
                 <div class="row justify-content-center">
                     <div class="col-xl-6 text-center my-4">
-                        <h2 style="font-size: 52px; color: #000;">KW - Calender</h2>
+                        <h2 style="font-size: 52px; color: #000;">KW-Calender</h2>
                     </div>
-                </div>
+                </div>  
                 <!-- Body -->
                 <div class="row">
                     <div class="col-xl-12">
@@ -60,15 +53,15 @@
                                 </div>
                             </div>
                             <!-- Left side -->
-                            <div class="wrap-info d-xl-flex" style="margin: 10px; border: 1px solid #000; border-radius: 10px; overflow: hidden;">   
+                            <div class="wrap-info d-xl-flex">   
                                 <div class="info">
                                     <!-- Today -->
                                     <div class="info-today">
                                         <!-- Reset button -->
                                         <p id="reset">Today</p>
                                         <!-- Today's date -->
-                                        <div class="info-month">December</div>
-                                        <div class="info-day">12</div>
+                                        <div class="info-month"></div>
+                                        <div class="info-day"></div>
                                     </div>
                                     <!-- Progress -->      
                                     <div class="info-progress">
@@ -77,12 +70,12 @@
                                 </div>                                                                     
                             </div>
                             <!-- Calendar -->
-                            <div class="wrap-calendar" style="margin: 10px; border: 1px solid #000; border-radius: 10px; overflow: hidden;">
+                            <div class="wrap-calendar">
                                 <div class="wrap-button">
                                     <!-- Previous month or next month -->
-                                    <button type="button" class="btn" style="float: left;"><i class="bi bi-caret-left-fill"></i></button>
-                                    <div class="button-month d-inline-flex align-middle">December</div>
-                                    <button type="button" class="btn" style="float: right;"><i class="bi bi-caret-right-fill"></i></button>
+                                    <button type="button" id="prev-btn" class="btn" style="float: left;"><i class="bi bi-caret-left-fill"></i></button>
+                                    <div id="head-month" class="d-inline-flex align-middle"></div>
+                                    <button type="button" id="next-btn" class="btn" style="float: right;"><i class="bi bi-caret-right-fill"></i></button>
                                 </div>
                                 <table id="calendar">
                                     <!-- Day of the week -->
@@ -182,8 +175,11 @@
 
         </section>
 
-        <!-- Javascript -->
+        <!-- JavaScript -->
         <script src="index.js"></script>
-
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
+        <script></script>
     </body>
 </html>
