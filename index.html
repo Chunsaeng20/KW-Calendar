@@ -33,8 +33,15 @@
     <!-- Body -->
     <body style="background-color: #f8f9fd;">
         <!-- Body -->
-        <section style="padding: 4rem 0;">
-            <div class="container">
+        <section style="padding: 4rem 0; display: flex; flex-direction:row; flex-wrap: nowrap; justify-content: center;">
+            <div class="d-none d-xl-block wrap-news">
+                <!-- News side -->            
+                <div class="info-tips">
+                    <div class="info-tips-heading">News</div>              
+                    <div class="info-tips-content"></div>       
+                </div>                               
+            </div>
+            <div class="container" style="margin: 0; border-width: 0; display: inline-block;">
                 <!-- Header -->
                 <div class="row justify-content-center">
                     <div class="col-xl-6 text-center my-4">
@@ -158,18 +165,11 @@
                     </div>
                 </div>
             </div>
-        </section>
-        <section>
-            <!-- Right side -->
-            <div class="wrap-tips">
-                <div class="info">                                                
-                    <!-- Tips -->
-                    <div class="info-tips">
-                        <div class="info-tips-heading">Tips</div>
-                    </div>                       
-                    <div class="info-tips-body">
-                        <div class="info-tips-content"></div>
-                    </div>          
+            <div class="d-none d-xl-block wrap-tips">                                            
+                <!-- Tips -->
+                <div class="info-tips">
+                    <div class="info-tips-heading">Tips</div>
+                    <div class="info-tips-content"></div>
                 </div>
             </div>
         </section>

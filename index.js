@@ -115,8 +115,6 @@ document.addEventListener('DOMContentLoaded', () => {
             slideWindowRight();
             // Todo list 띄우기
             showOnTodolist();
-            // Tips 띄우기
-            showOnTips();
         }
     });
 
@@ -172,29 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
         showOffTodolist();
         // 화면 바꾸기
         slideWindowLeft();
-        // Tips 끄기
-        showOffTips();
     });
-
-    // -------------------------------------------------------------------------------------------------------
-
-    // Tips 띄우기
-    function showOnTips () {
-        let tips = document.querySelector('.wrap-tips');
-        let selectorHeight = document.querySelector('.wrap-calendar').offsetHeight;
-        tips.style.height     = selectorHeight + "px";
-        tips.style.visibility = 'visible';
-        tips.style.position   = 'static';
-        tips.style.opacity    = 1;
-    }
-
-    // Tips 끄기
-    function showOffTips () {
-        let tips = document.querySelector('.wrap-tips');
-        tips.style.visibility = 'hidden';
-        tips.style.position   = 'absolute';
-        tips.style.opacity    = 0;
-    }
 
     // -------------------------------------------------------------------------------------------------------
 
