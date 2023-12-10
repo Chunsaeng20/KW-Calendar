@@ -61,6 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 초기 달력 업데이트
     updateCalendar();
     
+    
     // -------------------------------------------------------------------------------------------------------
 
     // 'TODAY button'에 대한 이벤트 처리기
@@ -74,6 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelector('.info-day').textContent   = currDay;
         document.querySelector('#head-month').textContent = currMonth + ' ' + currYear;
         updateCalendar();
+        updateProgress();
         
     });
 
@@ -134,23 +136,34 @@ document.addEventListener('DOMContentLoaded', () => {
             
         }
     });
-
+    
     function updateProgress() {
         let progressContent = document.querySelector('.info-progress-content');
         let totalTasks = 0;
         let taskDetails = '';
     
+        // Get D_day_DATA from localStorage
+        let storedD_day_DATA = localStorage.getItem('D_day_DATA');
+        let parsedD_day_DATA = storedD_day_DATA ? JSON.parse(storedD_day_DATA) : {};
+    
         // Iterate through all dates in DATA
-        for (const date in DATA) {
-            if (D_day_DATA[date] && D_day_DATA[date].length > 0) {
+        const sortedDates = Object.keys(DATA).sort((a, b) => new Date(a) - new Date(b));
+    
+        for (const date of sortedDates) {
+            if (parsedD_day_DATA[date] && parsedD_day_DATA[date].length > 0) {
                 // For each date, iterate through its Todo List
-                D_day_DATA[date].forEach(todo => {
+                parsedD_day_DATA[date].forEach(todo => {
                     if (todo && todo.todo.trim() !== "") {
                         totalTasks++;
+    
                         let today = new Date();
                         let dueDate = new Date(date);
                         let diffDays = Math.ceil((dueDate - today) / (1000 * 60 * 60 * 24));
-                        taskDetails += ` ${todo.todo.trim()} (D-${diffDays}),\n`;
+    
+                        // Determine whether to display 'D+' or 'D-'
+                        let daysLabel = diffDays >= 0 ? `D-${diffDays}` : `D+${diffDays*(-1)}`;
+    
+                        taskDetails += ` ${todo.todo.trim()} (${daysLabel}),\n`;
                     }
                 });
             }
@@ -268,6 +281,7 @@ document.addEventListener('DOMContentLoaded', () => {
         save();
         updateProgress();
     }
+    
     inputBtn.addEventListener('click',function(E){ //Todo list 인풋 입력 이벤트 리스너
         E.preventDefault();
         let input=inputBox.value;
@@ -295,6 +309,8 @@ document.addEventListener('DOMContentLoaded', () => {
             D_day_DATA[clickedDate].push({
                 todo: todo.todo
             });
+
+            save_D_day();
         }
 
         const listE=document.createElement('li');
@@ -340,5 +356,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     function save(){ //로컬 스토리지 저장
         localStorage.setItem(clickedDate,JSON.stringify(DATA[clickedDate]));
+    }
+    function save_D_day() {
+        localStorage.setItem('D_day_DATA', JSON.stringify(D_day_DATA));
     }
 });
