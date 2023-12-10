@@ -194,7 +194,7 @@ tbody td:after {
 }
 
 #today {
-    background: lightcoral;
+    background: lightcoral !important;
 }
 
 tbody td:hover, .selected {

@@ -40,15 +40,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 days[i].id = "disabled";
             }
             // 오늘 날짜라면
-            else if(i === today.getDay() + firstDate - 1){
-                if(currMonth === today.getMonth() && currDate === today.getFullYear()) {
-                    days[i].id = "today";
-                }
+            else if(i === today.getDate() + firstDate - 1 && currMonth === today.toLocaleString('en-US', { month: 'long' }) && currYear === today.getFullYear()){
+                days[i].id = "today";
             }
-            // 선택된 날짜라면
-            //if(selectedDay){
-            //    days[i].className = "selected";
-            //}
         }
     }
 
