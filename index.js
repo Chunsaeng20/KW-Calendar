@@ -5,7 +5,11 @@ let scheduleDate = [];
 
 document.addEventListener('DOMContentLoaded', () => {
     // 오늘 날짜 받아오기
-    let today = new Date();   
+    let today = new Date();  
+    const inputBox=document.querySelector('.input-box');
+    const inputBtn=document.querySelector('.input-btn');
+    const inputList=document.querySelector('.todoList');
+    let clickedDate;
 
     const inputBox=document.querySelector('.input-box');
     const inputBtn=document.querySelector('.input-btn');
@@ -131,7 +135,6 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         else if (event.target.tagName === 'TD' && event.target.closest('#calendar')) {
-            // 클릭된 날짜 받아오기
             let clickedDay = parseInt(event.target.textContent);
             event.target.classList.add('active');
             currDate = new Date(currDate.getFullYear(), currDate.getMonth(), event.target.innerHTML);
@@ -184,6 +187,7 @@ document.addEventListener('DOMContentLoaded', () => {
             todoList.style.position   = 'static';
             todoList.style.opacity    = 1;
         }, 1000);
+        
     }
 
     // Todo list 끄기
