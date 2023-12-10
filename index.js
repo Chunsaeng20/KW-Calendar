@@ -1,4 +1,7 @@
-let DATA={} ;
+// 일정
+let DATA = {};
+// 일정이 저장된 날짜
+let scheduleDate = [];
 
 document.addEventListener('DOMContentLoaded', () => {
     // 오늘 날짜 받아오기
@@ -39,7 +42,11 @@ document.addEventListener('DOMContentLoaded', () => {
         for(let i = 1; i <= lastDate ; i++) {
             days[n].innerHTML = i; 
             n++;
-        }
+        }   
+
+        // 일정이 저장된 날짜 불러오기
+        loadScheduleDate();
+
         // id 삽입
         for(let i = 0; i < 42; i++) {
             // 날짜가 비었으면
@@ -48,7 +55,17 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             // 오늘 날짜라면
             else if(i === today.getDate() + firstDate - 1 && currMonth === today.toLocaleString('en-US', { month: 'long' }) && currYear === today.getFullYear()){
+                // 오늘 날짜를 달력에 표시
                 days[i].id = "today";
+            }
+            // 일정이 존재하는지 확인
+            for(let j = 0; j < scheduleDate.length; j++){
+                // 일정이 존재하면 달력에 표시
+                if(i === parseInt(scheduleDate[j].substr(10, 2)) + firstDate - 1 && 
+                   currDate.getMonth() + 1 === parseInt(scheduleDate[j].substr(6, 2)) && 
+                   currYear === parseInt(scheduleDate[j].substr(0, 4))){
+                    days[i].id = "scheduled";
+                }
             }
         }
     }
@@ -203,13 +220,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
         DATA[clickedDate] = cleanToDos;
         save();
+
+        // 화면 업데이트
+        updateCalendar();
     }
 
     // Todo list 인풋 입력 이벤트 리스너
-    inputBtn.addEventListener('click',function(E){ 
+    inputBtn.addEventListener('click', function(E) { 
         E.preventDefault();
         let input = inputBox.value;
         InsertTodo(input);
+
+        // 화면 업데이트
+        updateCalendar();
     });
 
     // Todo list에 삽입
@@ -218,6 +241,7 @@ document.addEventListener('DOMContentLoaded', () => {
             todo: text,
         }
 
+        // 문자열이 없으면 생성
         if(!DATA[clickedDate]) {
             DATA[clickedDate] = [];
             DATA[clickedDate].push(todo);
@@ -254,8 +278,8 @@ document.addEventListener('DOMContentLoaded', () => {
             inputList.removeChild(listE[i])
         }
 
-        if ( savedE!==null ) {
-            const parsed=JSON.parse(localStorage.getItem(clickedDate));
+        if ( savedE !== null ) {
+            const parsed = JSON.parse(localStorage.getItem(clickedDate));
             parsed.forEach(function(Todo){
                 if(Todo){
                     let li     = document.createElement('li');
@@ -271,16 +295,56 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     li.setAttribute('id', Todo.id);
                     delbtn.addEventListener('click', deleteTodo);
+
+                    // 문자열이 없으면 생성
+                    if(!DATA[clickedDate]) {
+                        DATA[clickedDate] = [];
+                        DATA[clickedDate].push(Todo);
+                    } else {
+                        DATA[clickedDate].push(Todo);
+                    }
                 }
             });
+            // 로컬 스토리지 저장
+            localStorage.setItem(clickedDate, JSON.stringify(DATA[clickedDate]));
         }
     }
 
     // 로컬 스토리지 저장
     function save(){ 
+        // 배열 초기화
+        scheduleDate.splice(0, scheduleDate.length);
+        // 일정이 존재하는지 확인
+        let string = Object.values(DATA);
+        let keyDate = Object.keys(DATA);
+        for(let i = 0; i < Object.keys(DATA).length; i++)
+        {
+            // 일정이 존재하면 해당 날짜 저장
+            if(string[i].length > 0)
+            {
+                scheduleDate.push(keyDate[i]);
+            }
+        }
+        
+        // 로컬 스토리지에 일정 저장
         localStorage.setItem(clickedDate, JSON.stringify(DATA[clickedDate]));
+
+        // 로컬 스토리지에 날짜 저장
+        localStorage.setItem("Date", JSON.stringify(scheduleDate));
     }
 
     // -------------------------------------------------------------------------------------------------------
+
+    // 일정이 저장된 날짜 불러오기
+    function loadScheduleDate() {
+        let item = JSON.parse(localStorage.getItem("Date"));
+        if(item){
+            item.forEach((element)=>{
+                scheduleDate.push(element)
+            });
+        }
+        // 로컬 스토리지에 날짜 저장
+        localStorage.setItem("Date", JSON.stringify(scheduleDate));
+    }
 
 });

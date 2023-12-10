@@ -195,7 +195,10 @@ tbody td:after {
 
 #today:after {
     background: lightcoral;
-    border-radius: 25%;
+}
+
+#scheduled:after {
+    background: cyan;
 }
 
 tbody td:hover, .selected {
@@ -203,7 +206,7 @@ tbody td:hover, .selected {
     border: none; 
 }
 tbody td:hover:after, .selected:after {
-    background: sienna; 
+    background: sienna !important; 
 }
 
 tbody td:active {
