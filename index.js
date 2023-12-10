@@ -11,11 +11,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const inputList=document.querySelector('.todoList');
     let clickedDate;
 
-    const inputBox=document.querySelector('.input-box');
-    const inputBtn=document.querySelector('.input-btn');
-    const inputList=document.querySelector('.todoList');
-    let clickedDate;
-
     // 현재 날짜 받아오기
     let currDate  = new Date();
     let currYear  = currDate.getFullYear();
