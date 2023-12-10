@@ -1,7 +1,16 @@
-let DATA={} ;
+// 일정
+let DATA = {};
+// 일정이 저장된 날짜
+let scheduleDate = [];
+
 document.addEventListener('DOMContentLoaded', () => {
     // 오늘 날짜 받아오기
     let today = new Date();  
+    const inputBox=document.querySelector('.input-box');
+    const inputBtn=document.querySelector('.input-btn');
+    const inputList=document.querySelector('.todoList');
+    let clickedDate;
+
     const inputBox=document.querySelector('.input-box');
     const inputBtn=document.querySelector('.input-btn');
     const inputList=document.querySelector('.todoList');
@@ -37,7 +46,11 @@ document.addEventListener('DOMContentLoaded', () => {
         for(let i = 1; i <= lastDate ; i++) {
             days[n].innerHTML = i; 
             n++;
-        }
+        }   
+
+        // 일정이 저장된 날짜 불러오기
+        loadScheduleDate();
+
         // id 삽입
         for(let i = 0; i < 42; i++) {
             // 날짜가 비었으면
@@ -45,15 +58,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 days[i].id = "disabled";
             }
             // 오늘 날짜라면
-            else if(i === today.getDay() + firstDate - 1){
-                if(currMonth === today.getMonth() && currDate === today.getFullYear()) {
-                    days[i].id = "today";
+            else if(i === today.getDate() + firstDate - 1 && currMonth === today.toLocaleString('en-US', { month: 'long' }) && currYear === today.getFullYear()){
+                // 오늘 날짜를 달력에 표시
+                days[i].id = "today";
+            }
+            // 일정이 존재하는지 확인
+            for(let j = 0; j < scheduleDate.length; j++){
+                // 일정이 존재하면 달력에 표시
+                if(i === parseInt(scheduleDate[j].substr(10, 2)) + firstDate - 1 && 
+                   currDate.getMonth() + 1 === parseInt(scheduleDate[j].substr(6, 2)) && 
+                   currYear === parseInt(scheduleDate[j].substr(0, 4))){
+                    days[i].id = "scheduled";
                 }
             }
-            // 선택된 날짜라면
-            //if(selectedDay){
-            //    days[i].className = "selected";
-            //}
         }
     }
 
@@ -73,6 +90,13 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelector('.info-day').textContent   = currDay;
         document.querySelector('#head-month').textContent = currMonth + ' ' + currYear;
         updateCalendar();
+
+        // 만약 To do list가 켜져 있으면 끈다
+        let todoList = document.querySelector('.todo-list');
+        if(todoList.style.visibility === 'visible')
+        {
+            document.querySelector('#close-btn').click();
+        }        
     });
 
     // -------------------------------------------------------------------------------------------------------
@@ -112,21 +136,18 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         else if (event.target.tagName === 'TD' && event.target.closest('#calendar')) {
             let clickedDay = parseInt(event.target.textContent);
-            // 클릭된 날짜 받아오기
             event.target.classList.add('active');
-            currDate=new Date(currDate.getFullYear(),currDate.getMonth(),event.target.innerHTML);
-            clickedDate=currDate.toLocaleDateString('ko-KR',{year: 'numeric',month: '2-digit',day: '2-digit'});
+            currDate = new Date(currDate.getFullYear(), currDate.getMonth(), event.target.innerHTML);
+            clickedDate = currDate.toLocaleDateString('ko-KR', {year: 'numeric', month: '2-digit', day: '2-digit'});
             // info-day, info-month 업데이트
             document.querySelector('.info-day').textContent   = clickedDay;
             document.querySelector('.info-month').textContent = currMonth;
             // 화면 바꾸기
             slideWindowRight();
-            //클릭된 날짜의 Todo List로 업데이트
+            // 클릭된 날짜의 Todo List로 업데이트
             updateList();
             // Todo list 띄우기
             showOnTodolist();
-            // Tips 띄우기
-            showOnTips();
         }
     });
 
@@ -183,101 +204,151 @@ document.addEventListener('DOMContentLoaded', () => {
         showOffTodolist();
         // 화면 바꾸기
         slideWindowLeft();
-        // Tips 끄기
-        showOffTips();
     });
 
     // -------------------------------------------------------------------------------------------------------
 
-    // Tips 띄우기
-    function showOnTips () {
-        let tips = document.querySelector('.wrap-tips');
-        let selectorHeight = document.querySelector('.wrap-calendar').offsetHeight;
-        tips.style.height     = selectorHeight + "px";
-        tips.style.visibility = 'visible';
-        tips.style.position   = 'static';
-        tips.style.opacity    = 1;
-    }
-
-    // Tips 끄기
-    function showOffTips () {
-        let tips = document.querySelector('.wrap-tips');
-        tips.style.visibility = 'hidden';
-        tips.style.position   = 'absolute';
-        tips.style.opacity    = 0;
-    }
-
-    // -------------------------------------------------------------------------------------------------------
-    
-    function deleteTodo(E) {//Todo 삭제
+    // Todo 삭제
+    function deleteTodo(E) {
         E.preventDefault();
         let delParentLi = E.target.parentNode;
         inputList.removeChild(delParentLi);
+
         if (!DATA[clickedDate] || !Array.isArray(DATA[clickedDate])) {
             DATA[clickedDate] = [];
         }
+
         const cleanToDos = DATA[clickedDate].filter(function (todo) {
             return todo.id !== parseInt(delParentLi.id);
         });
+
         DATA[clickedDate] = cleanToDos;
         save();
+
+        // 화면 업데이트
+        updateCalendar();
     }
-    inputBtn.addEventListener('click',function(E){ //Todo list 인풋 입력 이벤트 리스너
+
+    // Todo list 인풋 입력 이벤트 리스너
+    inputBtn.addEventListener('click', function(E) { 
         E.preventDefault();
-        let input=inputBox.value;
+        let input = inputBox.value;
         InsertTodo(input);
+
+        // 화면 업데이트
+        updateCalendar();
     });
-    function InsertTodo(text){//Todo list에 삽입
-        let todo={
+
+    // Todo list에 삽입
+    function InsertTodo(text){
+        let todo = {
             todo: text,
         }
-        if(!DATA[clickedDate]){
-            DATA[clickedDate]=[];
+
+        // 문자열이 없으면 생성
+        if(!DATA[clickedDate]) {
+            DATA[clickedDate] = [];
             DATA[clickedDate].push(todo);
-        }else{
+        } else {
             DATA[clickedDate].push(todo);
         }
-        const listE=document.createElement('li');
-        const spanE=document.createElement('span');
-        const deleteBtn=document.createElement('button');
-        deleteBtn.innerText="DEL";
-        deleteBtn.setAttribute('class','del-data');
-        spanE.innerHTML=text;
+
+        const listE     = document.createElement('li');
+        const spanE     = document.createElement('span');
+        const deleteBtn = document.createElement('button');
+
+        deleteBtn.setAttribute('class', 'del-data');
+        deleteBtn.innerText = "DEL";
+        spanE.innerHTML = text;
         listE.appendChild(spanE);
         listE.appendChild(deleteBtn);
         inputList.appendChild(listE);
-        listE.setAttribute('id',DATA[clickedDate].length);
-        deleteBtn.addEventListener('click',deleteTodo);
-        todo.id=DATA[clickedDate].length;
+
+        listE.setAttribute('id', DATA[clickedDate].length);
+        deleteBtn.addEventListener('click', deleteTodo);
+
+        todo.id = DATA[clickedDate].length;
         save();
         inputBox.value='';
     }
-    function updateList(){ //선택된 날짜의 Todo List출력
-        let savedE=localStorage.getItem(clickedDate);
-        let listE=document.querySelectorAll('LI');
-            for(let i=0;i<listE.length;i++){
-                inputList.removeChild(listE[i])
-            }
-        if(savedE!==null){
-            const parsed=JSON.parse(localStorage.getItem(clickedDate));
+
+    // 선택된 날짜의 Todo List출력
+    function updateList(){ 
+        let savedE = localStorage.getItem(clickedDate);
+
+        let listE = document.querySelectorAll('LI');
+
+        for(let i = 0; i < listE.length; i++) {
+            inputList.removeChild(listE[i])
+        }
+
+        if ( savedE !== null ) {
+            const parsed = JSON.parse(localStorage.getItem(clickedDate));
             parsed.forEach(function(Todo){
                 if(Todo){
-                    let li=document.createElement('li');
-                    let sp=document.createElement('span');
-                    let delbtn=document.createElement('button');
-                    delbtn.setAttribute('class','del-data');
-                    delbtn.innerText="DEL";
-                    li.setAttribute('id',Todo.id);
-                    sp.innerHTML=Todo.todo;
+                    let li     = document.createElement('li');
+                    let sp     = document.createElement('span');
+                    let delbtn = document.createElement('button');
+
+                    delbtn.setAttribute('class', 'del-data');
+                    delbtn.innerText = "DEL";
+                    sp.innerHTML = Todo.todo;
                     li.appendChild(sp);
                     li.appendChild(delbtn);
                     inputList.appendChild(li);
-                    delbtn.addEventListener('click',deleteTodo);
+
+                    li.setAttribute('id', Todo.id);
+                    delbtn.addEventListener('click', deleteTodo);
+
+                    // 문자열이 없으면 생성
+                    if(!DATA[clickedDate]) {
+                        DATA[clickedDate] = [];
+                        DATA[clickedDate].push(Todo);
+                    } else {
+                        DATA[clickedDate].push(Todo);
+                    }
                 }
             });
+            // 로컬 스토리지 저장
+            localStorage.setItem(clickedDate, JSON.stringify(DATA[clickedDate]));
         }
     }
-    function save(){ //로컬 스토리지 저장
-        localStorage.setItem(clickedDate,JSON.stringify(DATA[clickedDate]));
+
+    // 로컬 스토리지 저장
+    function save(){ 
+        // 배열 초기화
+        scheduleDate.splice(0, scheduleDate.length);
+        // 일정이 존재하는지 확인
+        let string = Object.values(DATA);
+        let keyDate = Object.keys(DATA);
+        for(let i = 0; i < Object.keys(DATA).length; i++)
+        {
+            // 일정이 존재하면 해당 날짜 저장
+            if(string[i].length > 0)
+            {
+                scheduleDate.push(keyDate[i]);
+            }
+        }
+        
+        // 로컬 스토리지에 일정 저장
+        localStorage.setItem(clickedDate, JSON.stringify(DATA[clickedDate]));
+
+        // 로컬 스토리지에 날짜 저장
+        localStorage.setItem("Date", JSON.stringify(scheduleDate));
     }
+
+    // -------------------------------------------------------------------------------------------------------
+
+    // 일정이 저장된 날짜 불러오기
+    function loadScheduleDate() {
+        let item = JSON.parse(localStorage.getItem("Date"));
+        if(item){
+            item.forEach((element)=>{
+                scheduleDate.push(element)
+            });
+        }
+        // 로컬 스토리지에 날짜 저장
+        localStorage.setItem("Date", JSON.stringify(scheduleDate));
+    }
+
 });
