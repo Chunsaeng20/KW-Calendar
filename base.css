@@ -25,7 +25,7 @@
     bottom: 0;
     content: '';
     background: #000; 
-    opacity: .5;
+    /*opacity: .5;*/
     z-index: -1; 
 }
 @media (max-width: 1200px) {
@@ -193,8 +193,9 @@ tbody td:after {
     transition: none; } 
 }
 
-#today {
-    background: lightcoral !important;
+#today:after {
+    background: lightcoral;
+    border-radius: 25%;
 }
 
 tbody td:hover, .selected {
