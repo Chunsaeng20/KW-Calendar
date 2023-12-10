@@ -1,6 +1,11 @@
+let DATA={} ;
 document.addEventListener('DOMContentLoaded', () => {
     // 오늘 날짜 받아오기
-    let today = new Date();   
+    let today = new Date();  
+    const inputBox=document.querySelector('.input-box');
+    const inputBtn=document.querySelector('.input-btn');
+    const inputList=document.querySelector('.todoList');
+    let clickedDate;
 
     // 현재 날짜 받아오기
     let currDate  = new Date();
@@ -68,6 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelector('.info-day').textContent   = currDay;
         document.querySelector('#head-month').textContent = currMonth + ' ' + currYear;
         updateCalendar();
+        
     });
 
     // -------------------------------------------------------------------------------------------------------
@@ -81,6 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // 화면 업데이트
         document.querySelector('#head-month').textContent = currMonth + ' ' + currYear;
         updateCalendar();
+        
     });
 
     // -------------------------------------------------------------------------------------------------------
@@ -94,13 +101,12 @@ document.addEventListener('DOMContentLoaded', () => {
         // 화면 업데이트
         document.querySelector('#head-month').textContent = currMonth + ' ' + currYear;
         updateCalendar();
+        
     });
 
     // -------------------------------------------------------------------------------------------------------
 
-    // -------------------------------------------------------------------------------------------------------
-
-    // 이하 필요 기능 추가 작성.
+    // 'calender 내부의 td element'에 대한 이벤트 처리기
     let calendarTable = document.querySelector('#calendar');
     calendarTable.addEventListener('click', (event) => {
         // 날짜가 없으면 반환
@@ -108,51 +114,216 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         else if (event.target.tagName === 'TD' && event.target.closest('#calendar')) {
-            // 클릭된 날짜 받아오기
             let clickedDay = parseInt(event.target.textContent);
+            // 클릭된 날짜 받아오기
+            event.target.classList.add('active');
+            currDate=new Date(currDate.getFullYear(),currDate.getMonth(),event.target.innerHTML);
+            clickedDate=currDate.toLocaleDateString('ko-KR',{year: 'numeric',month: '2-digit',day: '2-digit'});
             // info-day, info-month 업데이트
             document.querySelector('.info-day').textContent   = clickedDay;
             document.querySelector('.info-month').textContent = currMonth;
-
-            // 선택된 날짜에 해당하는 to-do list 가져오기 (이 부분은 서버에서 데이터를 가져오는 로직이 들어가야 합니다.)
-            let selectedDate = `${currMonth} ${clickedDay}, ${currYear}`;
-
-            // 팝업에 날짜 업데이트
-            document.getElementById('selected-date-popup').textContent = selectedDate;
-
-            // 팝업 표시
-            document.getElementById('to-do-popup').style.display = 'block';
-
-            // To-Do List 표시 로직 추가 (이 부분도 서버에서 데이터를 가져오는 로직이 필요합니다.)
-            // 아래는 예시 코드이므로 실제 데이터 연동을 위해서는 서버와의 통신 등이 필요합니다.
-            let toDoListItems = ["Task 1", "Task 2", "Task 3"];
-            let toDoList = document.getElementById('to-do-items-popup');
-            toDoList.innerHTML = '';
-            toDoListItems.forEach((item) => {
-                let li = document.createElement('li');
-                li.textContent = item;
-                toDoList.appendChild(li);
-            });
-
-            // Add Task 버튼에 대한 이벤트 처리기
-            document.getElementById('add-task-btn-popup').addEventListener('click', () => {
-                let newTask = document.getElementById('new-task-popup').value;
-                if (newTask.trim() !== '') {
-                    // 실제로 서버에 데이터를 추가하는 로직이 필요합니다.
-                    // 이 부분은 예시 코드로 실제로 동작하지 않습니다.
-                    toDoListItems.push(newTask);
-                    let li = document.createElement('li');
-                    li.textContent = newTask;
-                    toDoList.appendChild(li);
-                    document.getElementById('new-task-popup').value = '';
-                }
-            });
+            // 화면 바꾸기
+            slideWindowRight();
+            //클릭된 날짜의 Todo List로 업데이트
+            updateList();
+            // Todo list 띄우기
+            showOnTodolist();
+            // Tips 띄우기
+            showOnTips();
+            
         }
     });
 
+    function updateProgress() {
+        let progressContent = document.querySelector('.info-progress-content');
+        let totalTasks = 0;
+        let taskDetails = '';
     
-});
+        // Iterate through all dates in DATA
+        for (const date in DATA) {
+            if (DATA[date] && DATA[date].length > 0) {
+                // For each date, iterate through its Todo List
+                DATA[date].forEach(todo => {
+                    if (todo && todo.todo.trim() !== "") {
+                        totalTasks++;
+                        let today = new Date();
+                        let dueDate = new Date(date);
+                        let diffDays = Math.ceil((dueDate - today) / (1000 * 60 * 60 * 24));
+                        taskDetails += ` ${todo.todo.trim()} (D-${diffDays}),\n`;
+                    }
+                });
+            }
+        }
+    
+        if (totalTasks > 0) {
+            // Remove the trailing comma and newline from taskDetails
+            taskDetails = taskDetails.replace(/(\n)$/, "");
+            progressContent.innerHTML = `${taskDetails}`;
+        } else {
+            progressContent.innerHTML = ''; // 할 일 목록이 없을 경우 내용을 지움
+        }
+    }
+    
+    
+    
+    // -------------------------------------------------------------------------------------------------------
 
-function closePopup() {
-    document.getElementById('to-do-popup').style.display = 'none';
-}
+    // 캘린더를 오른쪽으로 이동
+    function slideWindowRight () {
+        const selector = document.querySelector('.wrap-calendar');
+        selector.classList.remove('magictime', 'slideRightReturn');
+        selector.classList.add('magictime', 'slideRight');
+        setTimeout(() => {
+            selector.style.visibility = 'hidden';
+            selector.style.position   = 'absolute';
+            selector.style.opacity    = 0;
+        }, 1000);
+        
+    }
+
+    // 캘린더를 왼쪽으로 이동
+    function slideWindowLeft () {
+        const selector = document.querySelector('.wrap-calendar');
+        selector.classList.remove('magictime', 'slideRight');
+        selector.classList.add('magictime', 'slideRightReturn');
+        selector.style.visibility = 'visible';
+        selector.style.position   = 'relative';
+        selector.style.opacity    = 1;
+        
+    }
+
+    // -------------------------------------------------------------------------------------------------------
+
+    // Todo list 띄우기
+    function showOnTodolist() {
+        let todoList = document.querySelector('.todo-list');
+        let selectorHeight = document.querySelector('.wrap-calendar').offsetHeight;
+        todoList.style.height = selectorHeight + "px";
+        setTimeout(() => {
+            todoList.style.visibility = 'visible';
+            todoList.style.position = 'static';
+            todoList.style.opacity = 1;
+        }, 1000);
+        
+    }
+
+    // Todo list 끄기
+    function showOffTodolist () {
+        let todoList = document.querySelector('.todo-list');
+        todoList.style.visibility = 'hidden';
+        todoList.style.position   = 'absolute';
+        todoList.style.opacity    = 0;
+        
+    }
+
+    // 'Close button'에 대한 이벤트 처리기
+    document.querySelector('#close-btn').addEventListener('click', () => {
+        // Todo list 끄기
+        showOffTodolist();
+        // 화면 바꾸기
+        slideWindowLeft();
+        // Tips 끄기
+        showOffTips();
+        
+    });
+
+    // -------------------------------------------------------------------------------------------------------
+
+    // Tips 띄우기
+    function showOnTips () {
+        let tips = document.querySelector('.wrap-tips');
+        let selectorHeight = document.querySelector('.wrap-calendar').offsetHeight;
+        tips.style.height     = selectorHeight + "px";
+        tips.style.visibility = 'visible';
+        tips.style.position   = 'static';
+        tips.style.opacity    = 1;
+    }
+
+    // Tips 끄기
+    function showOffTips () {
+        let tips = document.querySelector('.wrap-tips');
+        tips.style.visibility = 'hidden';
+        tips.style.position   = 'absolute';
+        tips.style.opacity    = 0;
+    }
+
+    // -------------------------------------------------------------------------------------------------------
+     let checkDdayRadios = document.querySelectorAll('.checkDdayRadio');
+    checkDdayRadios.forEach((radio) => {
+        radio.addEventListener('change', updateProgress);
+    });
+
+    function deleteTodo(E) {//Todo 삭제
+        E.preventDefault();
+        let delParentLi = E.target.parentNode;
+        inputList.removeChild(delParentLi);
+        if (!DATA[clickedDate] || !Array.isArray(DATA[clickedDate])) {
+            DATA[clickedDate] = [];
+        }
+        const cleanToDos = DATA[clickedDate].filter(function (todo) {
+            return todo.id !== parseInt(delParentLi.id);
+        });
+        DATA[clickedDate] = cleanToDos;
+        save();
+        updateProgress();
+    }
+    inputBtn.addEventListener('click',function(E){ //Todo list 인풋 입력 이벤트 리스너
+        E.preventDefault();
+        let input=inputBox.value;
+        InsertTodo(input);
+    });
+    function InsertTodo(text){//Todo list에 삽입
+        let todo={
+            todo: text,
+        }
+        if(!DATA[clickedDate]){
+            DATA[clickedDate]=[];
+            DATA[clickedDate].push(todo);
+        }else{
+            DATA[clickedDate].push(todo);
+        }
+        const listE=document.createElement('li');
+        const spanE=document.createElement('span');
+        const deleteBtn=document.createElement('button');
+        deleteBtn.innerText="DEL";
+        deleteBtn.setAttribute('class','del-data');
+        spanE.innerHTML=text;
+        listE.appendChild(spanE);
+        listE.appendChild(deleteBtn);
+        inputList.appendChild(listE);
+        listE.setAttribute('id',DATA[clickedDate].length);
+        deleteBtn.addEventListener('click',deleteTodo);
+        todo.id=DATA[clickedDate].length;
+        save();
+        updateProgress();
+        inputBox.value='';
+    }
+    function updateList(){ //선택된 날짜의 Todo List출력
+        let savedE=localStorage.getItem(clickedDate);
+        let listE=document.querySelectorAll('LI');
+            for(let i=0;i<listE.length;i++){
+                inputList.removeChild(listE[i])
+            }
+        if(savedE!==null){
+            const parsed=JSON.parse(localStorage.getItem(clickedDate));
+            parsed.forEach(function(Todo){
+                if(Todo){
+                    let li=document.createElement('li');
+                    let sp=document.createElement('span');
+                    let delbtn=document.createElement('button');
+                    delbtn.setAttribute('class','del-data');
+                    delbtn.innerText="DEL";
+                    li.setAttribute('id',Todo.id);
+                    sp.innerHTML=Todo.todo;
+                    li.appendChild(sp);
+                    li.appendChild(delbtn);
+                    inputList.appendChild(li);
+                    delbtn.addEventListener('click',deleteTodo);
+                }
+            });
+        }
+    }
+    function save(){ //로컬 스토리지 저장
+        localStorage.setItem(clickedDate,JSON.stringify(DATA[clickedDate]));
+    }
+});
