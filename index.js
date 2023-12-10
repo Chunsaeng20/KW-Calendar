@@ -1,4 +1,5 @@
 let DATA={} ;
+let D_day_DATA={} ;
 document.addEventListener('DOMContentLoaded', () => {
     // 오늘 날짜 받아오기
     let today = new Date();  
@@ -141,9 +142,9 @@ document.addEventListener('DOMContentLoaded', () => {
     
         // Iterate through all dates in DATA
         for (const date in DATA) {
-            if (DATA[date] && DATA[date].length > 0) {
+            if (D_day_DATA[date] && D_day_DATA[date].length > 0) {
                 // For each date, iterate through its Todo List
-                DATA[date].forEach(todo => {
+                D_day_DATA[date].forEach(todo => {
                     if (todo && todo.todo.trim() !== "") {
                         totalTasks++;
                         let today = new Date();
@@ -248,10 +249,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // -------------------------------------------------------------------------------------------------------
-     let checkDdayRadios = document.querySelectorAll('.checkDdayRadio');
-    checkDdayRadios.forEach((radio) => {
-        radio.addEventListener('change', updateProgress);
-    });
+    function isDdayChecked() {
+        const checkedRadio = document.querySelector('.checkDdayRadio:checked');
+        return checkedRadio && checkedRadio.value === 'yes';
+    }
 
     function deleteTodo(E) {//Todo 삭제
         E.preventDefault();
@@ -272,16 +273,30 @@ document.addEventListener('DOMContentLoaded', () => {
         let input=inputBox.value;
         InsertTodo(input);
     });
+
     function InsertTodo(text){//Todo list에 삽입
-        let todo={
+        let todo = {
             todo: text,
+            checkDday: isDdayChecked() ? "Yes" : "No"  // Check if D-day is checked
+        };
+    
+        if (!DATA[clickedDate]) {
+            DATA[clickedDate] = [];
         }
-        if(!DATA[clickedDate]){
-            DATA[clickedDate]=[];
-            DATA[clickedDate].push(todo);
-        }else{
-            DATA[clickedDate].push(todo);
+    
+        DATA[clickedDate].push(todo);
+    
+        if (isDdayChecked() && todo.checkDday === "Yes") {
+            // Save to D_day_DATA if D-day is checked
+            if (!D_day_DATA[clickedDate]) {
+                D_day_DATA[clickedDate] = [];
+            }
+    
+            D_day_DATA[clickedDate].push({
+                todo: todo.todo
+            });
         }
+
         const listE=document.createElement('li');
         const spanE=document.createElement('span');
         const deleteBtn=document.createElement('button');
