@@ -66,3 +66,5 @@ Example image "Google Calendar"
 This source code is under MIT License
 
 magic.css is also under MIT License. You can see more information [here](https://github.com/miniMAC/magic)
+
+Photo by Benjamin Suter: https://www.pexels.com/photo/blue-and-green-sky-and-mountain-3617500/
