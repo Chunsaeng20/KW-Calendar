@@ -143,6 +143,8 @@ document.addEventListener('DOMContentLoaded', () => {
             updateList();
             // Todo list 띄우기
             showOnTodolist();
+            // Tips 띄우기
+            showOnTips();
         }
     });
 
@@ -193,10 +195,34 @@ document.addEventListener('DOMContentLoaded', () => {
         todoList.style.opacity    = 0;
     }
 
+    // Tips 띄우기
+    function showOnTips () {
+        let tips = document.querySelector('.info-tips');
+        setTimeout(() => {
+            tips.style.visibility = 'visible';
+            tips.style.opacity    = 1;
+        }, 100);
+        tips.classList.add('magictime', 'slideRightReturn');        
+    }
+
+    // Tips 끄기
+    function showOffTips () {
+        let tips = document.querySelector('.info-tips');
+        tips.classList.remove('magictime', 'slideRightReturn');
+        tips.classList.add('magictime', 'slideRight');   
+        setTimeout(() => {
+            tips.style.visibility = 'hidden';
+            tips.style.opacity    = 0;
+            tips.classList.remove('magictime', 'slideRight');
+        }, 300);
+    }
+
     // 'Close button'에 대한 이벤트 처리기
     document.querySelector('#close-btn').addEventListener('click', () => {
         // Todo list 끄기
         showOffTodolist();
+        // Tips 끄기
+        showOffTips();
         // 화면 바꾸기
         slideWindowLeft();
     });
@@ -228,6 +254,10 @@ document.addEventListener('DOMContentLoaded', () => {
     inputBtn.addEventListener('click', function(E) { 
         E.preventDefault();
         let input = inputBox.value;
+        
+        // 빈 입력은 무시
+        if(input === "") return;
+
         InsertTodo(input);
 
         // 화면 업데이트
