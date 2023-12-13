@@ -99,6 +99,9 @@
 .info-tips-content{
     font-size: 2rem;
 }
+#map{
+    padding-top: 1rem;
+}
 /* ====================================================================== */
 /* Side box */
 .info {
@@ -179,6 +182,10 @@
 li{
     padding-top: 0.5rem;
     font-size: 16px;
+}
+
+.del-data{
+    float: right;
 }
 /* ====================================================================== */
 /* Calendar side */
