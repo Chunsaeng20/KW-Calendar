@@ -53,8 +53,11 @@
     text-transform: uppercase;
     font-weight: 300; 
     overflow: hidden;
-    border-radius: 5px;
-    background: #fff;
+    border-radius: 15px;
+    background: white;
+    border-style: solid;
+    border-color: #8B4513;
+    border-width: 5px;
     box-shadow: 0px 19px 27px -20px rgba(0, 0, 0, 0.16); 
 }
 /* ====================================================================== */
@@ -79,9 +82,22 @@
     text-transform: uppercase;
     font-weight: 300; 
     overflow: hidden;
-    border-radius: 5px;
+    border-radius: 15px;
     background: #fff;
+    border-style: solid;
+    border-color: #8B4513;
+    border-width: 5px;
     box-shadow: 0px 19px 27px -20px rgba(0, 0, 0, 0.16); 
+}
+.info-tips-heading{
+    padding-top: 2rem;
+    font-size: 2rem;
+    line-height: 1;
+    text-transform: uppercase;
+    font-weight: 300; 
+}
+.info-tips-content{
+    font-size: 2rem;
 }
 /* ====================================================================== */
 /* Side box */
@@ -158,6 +174,11 @@
     text-transform: uppercase;
     font-weight: bold;
     position: relative; 
+}
+
+li{
+    padding-top: 0.5rem;
+    font-size: 16px;
 }
 /* ====================================================================== */
 /* Calendar side */
