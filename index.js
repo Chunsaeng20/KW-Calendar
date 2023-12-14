@@ -11,6 +11,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const inputList=document.querySelector('.todoList');
     let clickedDate;
     let loading = 0;
+    // 일정에 존재하는 장소
+    let currPlace = "";
 
     // 현재 날짜 받아오기
     let currDate  = new Date();
@@ -319,7 +321,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Tips에서 지도 삭제
-        findPlace("1");
+        currPlace = "";
 
         let loaded = 0;
         // 문자열이 없으면 생성
@@ -388,8 +390,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // 일정에서 장소 찾기
     function findPlace(todo){
         const place = ["화도관", "비마관", "옥의관", "중앙도서관", "복지관", "연구관", "참빛관", "연촌재", "한천재", "한울관", "승리관", "누리관", "새빛관", "빛솔재", "노천극장", "동해문화예술관", "80주년 기념관", "아이스링크", "광운대"];
-        // 일정에 존재하는 장소
-        let currPlace = "";
 
         if(!todo) return;
 
