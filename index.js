@@ -2,7 +2,13 @@
 let DATA = {};
 // 일정이 저장된 날짜
 let scheduleDate = [];
-
+//progress바 값 계산을 위한 Todo count, Done count 변수
+let TodoCnt={};
+let DoneCnt={};
+let progressbar='0';
+//D-day용 배열
+let D_day_DATA={} ;
+let taskIndex = 0; // Global variable to store task index
 document.addEventListener('DOMContentLoaded', () => {
     // 오늘 날짜 받아오기
     let today = new Date();  
@@ -150,6 +156,47 @@ document.addEventListener('DOMContentLoaded', () => {
             showOnTips();
         }
     });
+    function updateProgress() {
+        let progressContent = document.querySelector('.info-progress-content');
+        let totalTasks = 0;
+        let taskDetails = '';
+        taskIndex =0;
+        // Get D_day_DATA directly
+        const sortedDates = Object.keys(D_day_DATA).sort((a, b) => new Date(a) - new Date(b));
+    
+        for (const date of sortedDates) {
+            if (D_day_DATA[date] && D_day_DATA[date].length > 0) {
+                // For each date, iterate through its Todo List
+                D_day_DATA[date].forEach((todo) => {
+                    if (todo && todo.todo.trim() !== "") {
+                        totalTasks++;
+    
+                        let today = new Date();
+                        let dueDate = new Date(date);
+                        let diffDays = Math.ceil((dueDate - today) / (1000 * 60 * 60 * 24));
+    
+                        // Format the due date as a string
+                        let formattedDueDate = dueDate.toLocaleDateString();
+    
+                        // Determine whether to display 'D+' or 'D-' along with the exact number of days and due date
+                        let daysLabel = diffDays >= 0 ? `D-${diffDays}` : `D+${diffDays*(-1)}`;
+    
+                        // Display task number (taskIndex + 1) along with task details
+                        taskDetails += `${taskIndex + 1}. ${todo.todo.trim()} (${daysLabel}, ${formattedDueDate})<br>`;
+                        taskIndex++; // Increment the global task index
+                    }
+                });
+            }
+        }
+    
+        if (totalTasks > 0) {
+            // Remove the trailing line break from taskDetails
+            taskDetails = taskDetails.replace(/(<br>)$/, "");
+            progressContent.innerHTML = `${taskDetails}`;
+        } else {
+            progressContent.innerHTML = ''; // 할 일 목록이 없을 경우 내용을 지움
+        }
+    }
 
     // -------------------------------------------------------------------------------------------------------
 
@@ -177,6 +224,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // -------------------------------------------------------------------------------------------------------
 
+    function ProgressUpdate (){
+        let Todocnt=localStorage.getItem(clickedDate+'TodoCnt');
+        let Donecnt=localStorage.getItem(clickedDate+'DoneCnt');
+        progressbar='0';
+        if(!(Todocnt[clickedDate]==='0' || Donecnt[clickedDate]==='0')){
+            progressbar=String((DoneCnt[clickedDate]/TodoCnt[clickedDate])*100);
+        }
+        document.getElementById('progress').value=progressbar;
+    }
     // Todo list 띄우기
     function showOnTodolist () {
         let todoList = document.querySelector('.todo-list');
@@ -192,6 +248,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Todo list 끄기
     function showOffTodolist () {
+        progressbar='0';
+        document.getElementById('progress').value=progressbar;
         let todoList = document.querySelector('.todo-list');
         todoList.style.visibility = 'hidden';
         todoList.style.position   = 'absolute';
@@ -200,6 +258,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Tips 띄우기
     function showOnTips () {
+        ProgressUpdate();
         let tips = document.querySelector('.info-tips');
         setTimeout(() => {
             tips.style.visibility = 'visible';
@@ -231,32 +290,41 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // -------------------------------------------------------------------------------------------------------
-
+    function isDdayChecked() {
+        const checkedRadio = document.querySelector('.checkDdayRadio:checked');
+        return checkedRadio && checkedRadio.value === 'yes';
+    }
     // Todo 삭제
     function deleteTodo(E) {
         E.preventDefault();
         let delParentLi = E.target.parentNode;
+        let delcbInfo=delParentLi.querySelector('span').innerHTML;
+        if(localStorage.getItem(clickedDate+delcbInfo)==='true'){
+            DoneCnt[clickedDate]--;
+        }
+        localStorage.setItem(clickedDate+delcbInfo,'false'); 
+        TodoCnt[clickedDate]--;
         inputList.removeChild(delParentLi);
 
         if (!DATA[clickedDate] || !Array.isArray(DATA[clickedDate])) {
             DATA[clickedDate] = [];
         }
-
         const cleanToDos = DATA[clickedDate].filter(function (todo) {
             return todo.id !== parseInt(delParentLi.id);
         });
-
-        DATA[clickedDate] = cleanToDos;
-
         // 일정이 비면 그날을 배열에서 삭제
         if(Object.keys(DATA[clickedDate]).length === 0){
-            scheduleDate = scheduleDate.filter((value)=>{
+            DATA[clickedDate] = DATA[clickedDate].filter((value)=>{
                 if(value !== clickedDate) return true;
             });
         }
-
+        else{
+            DATA[clickedDate] = cleanToDos;
+        }
+        localStorage.setItem(clickedDate+'DoneCnt',DoneCnt[clickedDate]);
+        localStorage.setItem(clickedDate+'TodoCnt',TodoCnt[clickedDate]);
+        ProgressUpdate();
         save();
-
         // 화면 업데이트
         updateCalendar();
     }
@@ -270,7 +338,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if(input === "") return;
 
         InsertTodo(input);
-
         // 화면 업데이트
         updateCalendar();
     });
@@ -279,42 +346,77 @@ document.addEventListener('DOMContentLoaded', () => {
     function InsertTodo(text){
         let todo = {
             todo: text,
+            checkDday: isDdayChecked() ? "Yes" : "No"  // Check if D-day is checked
         }
 
         // 문자열이 없으면 생성
         if(!DATA[clickedDate]) {
             DATA[clickedDate] = [];
             DATA[clickedDate].push(todo);
+            TodoCnt[clickedDate]=[];
+            TodoCnt[clickedDate]=1;
         } else {
             DATA[clickedDate].push(todo);
+            TodoCnt[clickedDate]++;
+        }
+
+        if (isDdayChecked() && todo.checkDday === "Yes") {
+            // Save to D_day_DATA if D-day is checked
+            if (!D_day_DATA[clickedDate]) {
+                D_day_DATA[clickedDate] = [];
+            }
+    
+            D_day_DATA[clickedDate].push({
+                todo: todo.todo
+            });
         }
 
         const listE     = document.createElement('li');
         const spanE     = document.createElement('span');
         const deleteBtn = document.createElement('button');
+        const checkbox  = document.createElement('input');
 
+        checkbox.setAttribute('type','checkbox');
         deleteBtn.setAttribute('class', 'del-data');
-        deleteBtn.innerText = "DEL";
+        deleteBtn.innerText = "X";
         spanE.innerHTML = text;
         listE.appendChild(spanE);
+        listE.appendChild(checkbox);
         listE.appendChild(deleteBtn);
         inputList.appendChild(listE);
 
         listE.setAttribute('id', DATA[clickedDate].length);
         deleteBtn.addEventListener('click', deleteTodo);
-
+        checkbox.addEventListener('click',(e)=>{ //체크박스 상태 저장 이벤트리스너
+            const spantext=e.target.parentNode.querySelector('span').innerHTML;
+            if(e.target.checked===true){
+                DoneCnt[clickedDate]++;
+            }
+            else{
+                DoneCnt[clickedDate]--;
+            }
+            //해당 날짜의 일정 완료 count 저장
+            localStorage.setItem(clickedDate+'DoneCnt',DoneCnt[clickedDate]);
+            localStorage.setItem(clickedDate+spantext,e.target.checked); 
+            ProgressUpdate();
+        });
         todo.id = DATA[clickedDate].length;
 
         // 일정이 생긴 날짜를 저장
         scheduleDate.push(clickedDate);
-
+        //해당 날짜의 일정 count 저장
+        localStorage.setItem(clickedDate+'DoneCnt',DoneCnt[clickedDate]);
+        localStorage.setItem(clickedDate+'TodoCnt',TodoCnt[clickedDate]);
         save();
+        updateProgress();
         inputBox.value='';
     }
 
     // 선택된 날짜의 Todo List출력
     function updateList(){ 
         let savedE = localStorage.getItem(clickedDate);
+        TodoCnt[clickedDate]=localStorage.getItem(clickedDate+'TodoCnt');
+        DoneCnt[clickedDate]=localStorage.getItem(clickedDate+'DoneCnt');
         let listE = document.querySelectorAll('LI');
         for(let i = 0; i < listE.length; i++) {
             inputList.removeChild(listE[i])
@@ -337,17 +439,35 @@ document.addEventListener('DOMContentLoaded', () => {
                     let li     = document.createElement('li');
                     let sp     = document.createElement('span');
                     let delbtn = document.createElement('button');
+                    let cb  = document.createElement('input');
 
                     delbtn.setAttribute('class', 'del-data');
-                    delbtn.innerText = "DEL";
+                    cb.setAttribute('type','checkbox');
+                    delbtn.innerText = "X";
                     sp.innerHTML = Todo.todo;
                     li.appendChild(sp);
+                    li.appendChild(cb);
                     li.appendChild(delbtn);
                     inputList.appendChild(li);
 
                     li.setAttribute('id', Todo.id);
                     delbtn.addEventListener('click', deleteTodo);
-                    
+                    cb.addEventListener('click',(e)=>{ //체크박스 상태 저장 이벤트리스너
+                        const spantext=e.target.parentNode.querySelector('span').innerHTML;
+                        if(e.target.checked===true){
+                            DoneCnt[clickedDate]++;
+                        }
+                        else{
+                            DoneCnt[clickedDate]--;
+                        }
+                        localStorage.setItem(clickedDate+'DoneCnt',DoneCnt[clickedDate]);
+                        localStorage.setItem(clickedDate+spantext,e.target.checked); 
+                        ProgressUpdate();
+                    });
+                    var checked=localStorage.getItem(clickedDate+sp.innerHTML);
+                    if(checked==='true'){
+                        cb.checked=true;
+                    }
                     // Tips에 지도 생성
                     findPlace(Todo.todo);
                     // 새로고침 했을 경우
@@ -458,7 +578,6 @@ document.addEventListener('DOMContentLoaded', () => {
             map.innerHTML = '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d790.0621597558062!2d127.05888122665434!3d37.61983879393919!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357cbb952907ece3%3A0x15c12166c3c20e4a!2z6rSR7Jq064yA7ZWZ6rWQ!5e0!3m2!1sko!2skr!4v1702466070675!5m2!1sko!2skr" width="200" height="500" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>';
         }
     }
-
     // -------------------------------------------------------------------------------------------------------
 
     // 'ABOUT'에 대한 이벤트 처리기
