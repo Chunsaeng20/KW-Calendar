@@ -230,7 +230,12 @@ document.addEventListener('DOMContentLoaded', () => {
         progressbar='0';
         if(!(Todocnt==='0' || Donecnt==='0')){
             progressbar=parseInt((DoneCnt[clickedDate]/TodoCnt[clickedDate])*100);
-            document.getElementById('progress').value=String(progressbar);
+            if(Number.isNaN(progressbar)){
+                document.getElementById('progress').value='0';    
+            }
+            else{
+                document.getElementById('progress').value=String(progressbar);
+            }
         }
         else{
             document.getElementById('progress').value='0';
