@@ -17,6 +17,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const inputList=document.querySelector('.todoList');
     let clickedDate;
     let loading = 0;
+    // 일정에 존재하는 장소
+    let currPlace = "";
 
     // 현재 날짜 받아오기
     let currDate  = new Date();
@@ -424,7 +426,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Tips에서 지도 삭제
-        findPlace("1");
+        currPlace = "";
 
         let loaded = 0;
         // 문자열이 없으면 생성
@@ -512,8 +514,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // 일정에서 장소 찾기
     function findPlace(todo){
         const place = ["화도관", "비마관", "옥의관", "중앙도서관", "복지관", "연구관", "참빛관", "연촌재", "한천재", "한울관", "승리관", "누리관", "새빛관", "빛솔재", "노천극장", "동해문화예술관", "80주년 기념관", "아이스링크", "광운대"];
-        // 일정에 존재하는 장소
-        let currPlace = "";
 
         if(!todo) return;
 
@@ -583,4 +583,42 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     // -------------------------------------------------------------------------------------------------------
+
+    // 'ABOUT'에 대한 이벤트 처리기
+    var aboutItems = document.querySelectorAll('.wrap-news .info-about .card');
+
+    aboutItems.forEach(function (item) {
+        item.addEventListener('click', function () {
+        // 각 항목에 따른 링크 설정
+        switch (item.innerText.trim()) {
+            case 'WEBPAGE':
+            window.location.href = 'https://www.kw.ac.kr/ko/';
+            break;
+            case 'KLAS':
+            window.location.href = 'https://klas.kw.ac.kr/';
+            break;
+            case 'KW-TIMES':
+            window.location.href = 'https://kwnews.kw.ac.kr/index2.html?editcode=MAIN_12';
+            break;
+            case 'EMPLOYMENT BOARD':
+            window.location.href = 'https://www.kw.ac.kr/ko/life/job.jsp';
+            break;
+            case 'KW GRAD SCHOOL':
+            window.location.href = 'https://grad.kw.ac.kr/';
+            break;
+            case 'STUDENT ORGANIZATION':
+            window.location.href = 'https://www.kw.ac.kr/ko/life/activity02.jsp';
+            break;
+            case 'KW-MEDIA':
+            window.location.href = 'https://news.kw.ac.kr/';
+            break;
+            case 'NOTIFICATION SQUARE':
+            window.location.href = 'https://www.kw.ac.kr/ko/life/notice.jsp';
+            break;
+        }
+        });
+    });
+
+    // -------------------------------------------------------------------------------------------------------
+
 });

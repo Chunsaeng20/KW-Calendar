@@ -43,7 +43,7 @@
     border-radius: 10px;
     text-align: center;
 }
-.info-news {
+.info-about {
     width: 200px;
     height: 100%;
     position: relative; 
@@ -52,7 +52,7 @@
     color: black; 
     text-transform: uppercase;
     font-weight: 300; 
-    overflow: hidden;
+    /*overflow: hidden;*/
     border-radius: 15px;
     background: white;
     border-style: solid;
@@ -304,5 +304,25 @@ tbody td:active {
 .checkDdayNo:not(:checked) + .checkDdayLabel {
     background-color: initial; /* 미선택 상태일 때의 배경 색상 */
     color: initial; /* 미선택 상태일 때의 텍스트 색상 */
+}
+/* ====================================================================== */
+#progress {
+    margin: 0 auto;
+    width: 70%;
+    height: 10px;
+    appearance: none;
+}
+  
+#progress::-webkit-progress-bar {
+background: #f0f0f0;
+border-radius: 10px;
+box-shadow: inset 3px 3px 10px #ccc;
+}
+
+#progress::-webkit-progress-value {
+border-radius:10px;
+background: #1D976C;
+background: -webkit-linear-gradient(to right, #93F9B9, #1D976C);
+background: linear-gradient(to right, #93F9B9, #1D976C);
 }
 /* ====================================================================== */
