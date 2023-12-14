@@ -260,18 +260,17 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!DATA[clickedDate] || !Array.isArray(DATA[clickedDate])) {
             DATA[clickedDate] = [];
         }
-
         const cleanToDos = DATA[clickedDate].filter(function (todo) {
             return todo.id !== parseInt(delParentLi.id);
         });
-
-        DATA[clickedDate] = cleanToDos;
-
         // 일정이 비면 그날을 배열에서 삭제
         if(Object.keys(DATA[clickedDate]).length === 0){
-            scheduleDate = scheduleDate.filter((value)=>{
+            DATA[clickedDate] = DATA[clickedDate].filter((value)=>{
                 if(value !== clickedDate) return true;
             });
+        }
+        else{
+            DATA[clickedDate] = cleanToDos;
         }
         localStorage.setItem(clickedDate+'DoneCnt',DoneCnt[clickedDate]);
         localStorage.setItem(clickedDate+'TodoCnt',TodoCnt[clickedDate]);
@@ -317,9 +316,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const checkbox  = document.createElement('input');
 
         checkbox.setAttribute('type','checkbox');
-        checkbox.setAttribute('id','cb');
         deleteBtn.setAttribute('class', 'del-data');
-        deleteBtn.innerText = "DEL";
+        deleteBtn.innerText = "X";
         spanE.innerHTML = text;
         listE.appendChild(spanE);
         listE.appendChild(checkbox);
@@ -383,8 +381,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     delbtn.setAttribute('class', 'del-data');
                     cb.setAttribute('type','checkbox');
-                    cb.setAttribute('id','cb');
-                    delbtn.innerText = "DEL";
+                    delbtn.innerText = "X";
                     sp.innerHTML = Todo.todo;
                     li.appendChild(sp);
                     li.appendChild(cb);
