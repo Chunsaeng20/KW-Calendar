@@ -234,6 +234,8 @@ document.addEventListener('DOMContentLoaded', () => {
     function deleteTodo(E) {
         E.preventDefault();
         let delParentLi = E.target.parentNode;
+        let delcbInfo=delParentLi.querySelector('span').innerHTML;
+        localStorage.setItem(clickedDate+delcbInfo,'false'); 
         inputList.removeChild(delParentLi);
 
         if (!DATA[clickedDate] || !Array.isArray(DATA[clickedDate])) {
@@ -268,7 +270,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if(input === "") return;
 
         InsertTodo(input);
-
         // 화면 업데이트
         updateCalendar();
     });
@@ -290,17 +291,24 @@ document.addEventListener('DOMContentLoaded', () => {
         const listE     = document.createElement('li');
         const spanE     = document.createElement('span');
         const deleteBtn = document.createElement('button');
+        const checkbox  = document.createElement('input');
 
+        checkbox.setAttribute('type','checkbox');
+        checkbox.setAttribute('id','cb');
         deleteBtn.setAttribute('class', 'del-data');
         deleteBtn.innerText = "DEL";
         spanE.innerHTML = text;
         listE.appendChild(spanE);
+        listE.appendChild(checkbox);
         listE.appendChild(deleteBtn);
         inputList.appendChild(listE);
 
         listE.setAttribute('id', DATA[clickedDate].length);
         deleteBtn.addEventListener('click', deleteTodo);
-
+        checkbox.addEventListener('click',(e)=>{ //체크박스 상태 저장 이벤트리스너
+            const spantext=e.target.parentNode.querySelector('span').innerHTML;
+            localStorage.setItem(clickedDate+spantext,e.target.checked); 
+        });
         todo.id = DATA[clickedDate].length;
 
         // 일정이 생긴 날짜를 저장
@@ -335,17 +343,28 @@ document.addEventListener('DOMContentLoaded', () => {
                     let li     = document.createElement('li');
                     let sp     = document.createElement('span');
                     let delbtn = document.createElement('button');
+                    let cb  = document.createElement('input');
 
                     delbtn.setAttribute('class', 'del-data');
+                    cb.setAttribute('type','checkbox');
+                    cb.setAttribute('id','cb');
                     delbtn.innerText = "DEL";
                     sp.innerHTML = Todo.todo;
                     li.appendChild(sp);
+                    li.appendChild(cb);
                     li.appendChild(delbtn);
                     inputList.appendChild(li);
 
                     li.setAttribute('id', Todo.id);
                     delbtn.addEventListener('click', deleteTodo);
-                    
+                    cb.addEventListener('click',(e)=>{ //체크박스 상태 저장 이벤트리스너
+                        const spantext=e.target.parentNode.querySelector('span').innerHTML;
+                        localStorage.setItem(clickedDate+spantext,e.target.checked); 
+                    });
+                    var checked=localStorage.getItem(clickedDate+sp.innerHTML);
+                    if(checked==='true'){
+                        cb.checked=true;
+                    }
                     // Tips에 지도 생성
                     findPlace(Todo.todo);
                     // 새로고침 했을 경우
@@ -458,7 +477,5 @@ document.addEventListener('DOMContentLoaded', () => {
             map.innerHTML = '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d790.0621597558062!2d127.05888122665434!3d37.61983879393919!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357cbb952907ece3%3A0x15c12166c3c20e4a!2z6rSR7Jq064yA7ZWZ6rWQ!5e0!3m2!1sko!2skr!4v1702466070675!5m2!1sko!2skr" width="200" height="500" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>';
         }
     }
-
     // -------------------------------------------------------------------------------------------------------
-
 });
