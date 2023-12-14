@@ -33,8 +33,58 @@
     <!-- Body -->
     <body style="background-color: #f8f9fd;">
         <!-- Body -->
-        <section style="padding: 4rem 0;">
-            <div class="container">
+        <section style="padding: 4rem 0; display: flex; flex-direction:row; flex-wrap: nowrap; justify-content: center;">
+            <div class="d-none d-xxl-block wrap-about">
+                <!-- About side -->            
+                <div class="info-about">
+                    <div class="info-about-heading text-center">
+                        <h2 style="margin-top: 65px; margin-bottom: 30px; font-size: 20px; color: #000;">ABOUT</h2>
+                    </div>              
+                    <div class="info-content text-center">
+                        <div class="card mb-3" style="background-color: #ddd8d8; cursor: pointer;" onmouseover="this.style.backgroundColor='#fff';" onmouseout="this.style.backgroundColor='#ddd8d8';">
+                            <div class="card-body">
+                                <h5 class="card-title" style="font-size: 15px;">Webpage</h5>
+                            </div>
+                        </div>
+                        <div class="card mb-3" style="background-color: #ddd8d8; cursor: pointer;" onmouseover="this.style.backgroundColor='#fff';" onmouseout="this.style.backgroundColor='#ddd8d8';">
+                            <div class="card-body">
+                                <h5 class="card-title" style="font-size: 15px;">KLAS</h5>
+                            </div>
+                        </div>
+                        <div class="card mb-3" style="background-color: #ddd8d8; cursor: pointer;" onmouseover="this.style.backgroundColor='#fff';" onmouseout="this.style.backgroundColor='#ddd8d8';">
+                            <div class="card-body">
+                                <h5 class="card-title" style="font-size: 15px;">KW-Times</h5>
+                            </div>
+                        </div>
+                        <div class="card mb-3" style="background-color: #ddd8d8; cursor: pointer;" onmouseover="this.style.backgroundColor='#fff';" onmouseout="this.style.backgroundColor='#ddd8d8';">
+                            <div class="card-body">
+                                <h5 class="card-title" style="font-size: 15px;">Employment Board</h5>
+                            </div>
+                        </div>
+                        <div class="card mb-3" style="background-color: #ddd8d8; cursor: pointer;" onmouseover="this.style.backgroundColor='#fff';" onmouseout="this.style.backgroundColor='#ddd8d8';">
+                            <div class="card-body">
+                                <h5 class="card-title" style="font-size: 15px;">KW Grad School</h5>
+                            </div>
+                        </div>
+                        <div class="card mb-3" style="background-color: #ddd8d8; cursor: pointer;" onmouseover="this.style.backgroundColor='#fff';" onmouseout="this.style.backgroundColor='#ddd8d8';">
+                            <div class="card-body">
+                                <h5 class="card-title" style="font-size: 15px;">Student Organization</h5>
+                            </div>
+                        </div>
+                        <div class="card mb-3" style="background-color: #ddd8d8; cursor: pointer;" onmouseover="this.style.backgroundColor='#fff';" onmouseout="this.style.backgroundColor='#ddd8d8';">
+                            <div class="card-body">
+                                <h5 class="card-title" style="font-size: 15px;">KW-Media</h5>
+                            </div>
+                        </div>
+                        <div class="card mb-3" style="background-color: #ddd8d8; cursor: pointer;" onmouseover="this.style.backgroundColor='#fff';" onmouseout="this.style.backgroundColor='#ddd8d8';">
+                            <div class="card-body">
+                                <h5 class="card-title" style="font-size: 15px;">Notification Square</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>       
+            </div> 
+            <div class="container" style="margin: 0; border-width: 0; display: inline-block;">
                 <!-- Header -->
                 <div class="row justify-content-center">
                     <div class="col-xl-6 text-center my-4">
@@ -46,16 +96,8 @@
                     <div class="col-xl-12">
                         <!-- Outer box -->
                         <div class="outer-box d-xl-flex">
-                            <!-- News area -->
-                            <div class="wrap-news d-xl-flex" style="margin: 10px; border: 1px solid #000; border-radius: 10px; overflow: hidden;">
-                                <!-- -->
-                                <div class="news">
-                                    <div class="news-image img-fluid" style="border-bottom: 1px solid #000;">Image Area</div>
-                                    <div class="news-text">Text Area</div>
-                                </div>
-                            </div>
                             <!-- Left side -->
-                            <div class="wrap-info d-xl-flex">   
+                            <div class="wrap-info d-xl-flex" style="background-image: url(image/pexels-benjamin-suter-3617500.jpg); background-size: cover;">
                                 <div class="info">
                                     <!-- Today -->
                                     <div class="info-today">
@@ -68,6 +110,9 @@
                                     <!-- Progress -->      
                                     <div class="info-progress">
                                         <div class="info-progress-heading">progress</div>
+                                        <div>
+                                            <progress value="20" max="100"></progress>
+                                        </div>
                                     </div>            
                                 </div>                                                                     
                             </div>
@@ -76,11 +121,13 @@
                             <div class="todo-list">
                                 <div class="todo-list-heading">
                                     To do list
-                                    <button type="button" id="close-btn" class="btn" style="float: right;"><i class="bi bi-caret-right-fill"></i></button>
+                                    <button type="button" id="close-btn" class="btn" style="float: right;"><i class="bi bi-x-lg"></i></button>
                                 </div>
-                                <div class="todo-list-body">
-                                    <div class="todo-list-content"></div>
-                                </div>
+                                <form class="input-form" style="margin-top: 1rem;">
+                                    <input type="text" size="30" placeholder="To do" class="input-box"/>
+                                    <button type="submit" class="input-btn clickBtn">Insert</button>
+                                </form>
+                                <ul class="todoList"></ul>
                             </div>
                             <!-- Calendar -->
                             <div class="wrap-calendar">
@@ -166,18 +213,13 @@
                     </div>
                 </div>
             </div>
-        </section>
-        <section>
-            <!-- Right side -->
-            <div class="wrap-tips">
-                <div class="info">                                                
-                    <!-- Tips -->
-                    <div class="info-tips">
-                        <div class="info-tips-heading">Tips</div>
-                    </div>                       
-                    <div class="info-tips-body">
-                        <div class="info-tips-content"></div>
-                    </div>          
+            <div class="d-none d-xxl-block wrap-tips">                                            
+                <!-- Tips -->
+                <div class="info-tips">
+                    <div class="info-tips-heading">Tips</div>
+                    <div class="info-tips-content">
+                        <div id="map"></div>
+                    </div>
                 </div>
             </div>
         </section>
