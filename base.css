@@ -285,4 +285,24 @@ tbody td:active {
 #reset:active {
     transform: scale(0.8); 
 }
+
+.checkDdayYes:checked + .checkDdayLabel {
+    background-color: green;
+    color: white;
+}
+
+.checkDdayYes:not(:checked) + .checkDdayLabel {
+    background-color: initial; /* 미선택 상태일 때의 배경 색상 */
+    color: initial; /* 미선택 상태일 때의 텍스트 색상 */
+}
+
+.checkDdayNo:checked + .checkDdayLabel {
+    background-color: red;
+    color: white;
+}
+
+.checkDdayNo:not(:checked) + .checkDdayLabel {
+    background-color: initial; /* 미선택 상태일 때의 배경 색상 */
+    color: initial; /* 미선택 상태일 때의 텍스트 색상 */
+}
 /* ====================================================================== */
