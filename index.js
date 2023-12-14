@@ -261,7 +261,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Tips 띄우기
     function showOnTips () {
-        ProgressUpdate();
         let tips = document.querySelector('.info-tips');
         setTimeout(() => {
             tips.style.visibility = 'visible';
