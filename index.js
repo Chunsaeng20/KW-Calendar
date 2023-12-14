@@ -461,4 +461,41 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // -------------------------------------------------------------------------------------------------------
 
+    // 'ABOUT'에 대한 이벤트 처리기
+    var aboutItems = document.querySelectorAll('.wrap-news .info-about .card');
+
+    aboutItems.forEach(function (item) {
+        item.addEventListener('click', function () {
+        // 각 항목에 따른 링크 설정
+        switch (item.innerText.trim()) {
+            case 'WEBPAGE':
+            window.location.href = 'https://www.kw.ac.kr/ko/';
+            break;
+            case 'KLAS':
+            window.location.href = 'https://klas.kw.ac.kr/';
+            break;
+            case 'KW-TIMES':
+            window.location.href = 'https://kwnews.kw.ac.kr/index2.html?editcode=MAIN_12';
+            break;
+            case 'EMPLOYMENT BOARD':
+            window.location.href = 'https://www.kw.ac.kr/ko/life/job.jsp';
+            break;
+            case 'KW GRAD SCHOOL':
+            window.location.href = 'https://grad.kw.ac.kr/';
+            break;
+            case 'STUDENT ORGANIZATION':
+            window.location.href = 'https://www.kw.ac.kr/ko/life/activity02.jsp';
+            break;
+            case 'KW-MEDIA':
+            window.location.href = 'https://news.kw.ac.kr/';
+            break;
+            case 'NOTIFICATION SQUARE':
+            window.location.href = 'https://www.kw.ac.kr/ko/life/notice.jsp';
+            break;
+        }
+        });
+    });
+
+    // -------------------------------------------------------------------------------------------------------
+
 });

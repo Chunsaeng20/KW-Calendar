@@ -43,7 +43,7 @@
     border-radius: 10px;
     text-align: center;
 }
-.info-news {
+.info-about {
     width: 200px;
     height: 100%;
     position: relative; 
@@ -52,7 +52,7 @@
     color: black; 
     text-transform: uppercase;
     font-weight: 300; 
-    overflow: hidden;
+    /*overflow: hidden;*/
     border-radius: 15px;
     background: white;
     border-style: solid;
