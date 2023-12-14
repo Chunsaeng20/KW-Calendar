@@ -229,9 +229,8 @@ document.addEventListener('DOMContentLoaded', () => {
         let Donecnt=localStorage.getItem(clickedDate+'DoneCnt');
         progressbar='0';
         if(!(Todocnt==='0' || Donecnt==='0')){
-            progressbar=(DoneCnt[clickedDate]/TodoCnt[clickedDate])*100;
-            progresspercent=parseInt(progressbar);
-            document.getElementById('progress').value=progressbar;
+            progressbar=parseInt((DoneCnt[clickedDate]/TodoCnt[clickedDate])*100);
+            document.getElementById('progress').value=String(progressbar);
         }
         else{
             document.getElementById('progress').value='0';
@@ -259,7 +258,7 @@ document.addEventListener('DOMContentLoaded', () => {
         todoList.style.visibility = 'hidden';
         todoList.style.position   = 'absolute';
         todoList.style.opacity    = 0;
-        ProgressUpdate();
+        document.getElementById('progress').value='0';
     }
 
     // Tips 띄우기
