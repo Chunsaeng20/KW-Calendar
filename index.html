@@ -74,6 +74,7 @@
                                         <div>
                                             <progress class="progress" id="progress" value="0" min="0" max="100"></progress>
                                         </div>
+                                        <div class="info-progress-content"></div> <!-- D-day표시부분 -->
                                     </div>            
                                 </div>                                                                     
                             </div>
@@ -86,6 +87,14 @@
                                 </div>
                                 <form class="input-form" style="margin-top: 1rem;">
                                     <input type="text" size="30" placeholder="To do" class="input-box"/>
+
+                                    <!-- Check D-day Radio Buttons -->
+                                    <label for="checkDday">Check D-day:</label>
+                                    <input type="radio" id="checkDdayYes" name="checkDday" class="checkDdayRadio" value="yes">
+                                    <label for="checkDdayYes" class="checkDdayLabel">Yes</label>
+                                    <input type="radio" id="checkDdayNo" name="checkDday" class="checkDdayRadio" value="no" checked>
+                                    <label for="checkDdayNo" class="checkDdayLabel">No</label>
+                                    
                                     <button type="submit" class="input-btn clickBtn">Insert</button>
                                 </form>
                                 <ul class="todoList" id="todoList"></ul>
