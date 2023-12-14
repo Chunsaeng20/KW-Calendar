@@ -33,8 +33,19 @@
     <!-- Body -->
     <body style="background-color: #f8f9fd;">
         <!-- Body -->
-        <section style="padding: 4rem 0;">
-            <div class="container">
+        <section style="padding: 4rem 0; display: flex; flex-direction:row; flex-wrap: nowrap; justify-content: center;">
+            <div class="d-none d-xxl-block wrap-news">
+                <!-- News side -->            
+                <div class="info-news">
+                    <div class="info-tips-heading">News</div>              
+                    <div class="info-tips-content">
+                        <div class="news">
+                            <iframe src="https://kwnews.kw.ac.kr/news/articleList.html?view_type=sm" width="200" height="500" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" sandbox=""></iframe>
+                        </div>
+                    </div>       
+                </div>                               
+            </div>
+            <div class="container" style="margin: 0; border-width: 0; display: inline-block;">
                 <!-- Header -->
                 <div class="row justify-content-center">
                     <div class="col-xl-6 text-center my-4">
@@ -47,7 +58,7 @@
                         <!-- Outer box -->
                         <div class="outer-box d-xl-flex">
                             <!-- Left side -->
-                            <div class="wrap-info d-xl-flex">   
+                            <div class="wrap-info d-xl-flex" style="background-image: url(image/pexels-benjamin-suter-3617500.jpg); background-size: cover;">
                                 <div class="info">
                                     <!-- Today -->
                                     <div class="info-today">
@@ -60,9 +71,9 @@
                                     <!-- Progress -->      
                                     <div class="info-progress">
                                         <div class="info-progress-heading">progress</div>
-                                        <div>
-                                            <progress value="20" max="100"></progress>
-                                        </div>
+                                        <div class>progress 1</div>
+                                        <div class>progress 2</div>
+                                        <div class>progress 3</div>
                                     </div>            
                                 </div>                                                                     
                             </div>
@@ -71,10 +82,10 @@
                             <div class="todo-list">
                                 <div class="todo-list-heading">
                                     To do list
-                                    <button type="button" id="close-btn" class="btn" style="float: right;"><i class="bi bi-caret-right-fill"></i></button>
+                                    <button type="button" id="close-btn" class="btn" style="float: right;"><i class="bi bi-x-lg"></i></button>
                                 </div>
-                                <form class="input-form">
-                                    <input type="text" placeholder="Todo" class="input-box"/>
+                                <form class="input-form" style="margin-top: 1rem;">
+                                    <input type="text" size="30" placeholder="To do" class="input-box"/>
                                     <button type="submit" class="input-btn clickBtn">Insert</button>
                                 </form>
                                 <ul class="todoList"></ul>
@@ -163,18 +174,13 @@
                     </div>
                 </div>
             </div>
-        </section>
-        <section>
-            <!-- Right side -->
-            <div class="wrap-tips">
-                <div class="info">                                                
-                    <!-- Tips -->
-                    <div class="info-tips">
-                        <div class="info-tips-heading">Tips</div>
-                    </div>                       
-                    <div class="info-tips-body">
-                        <div class="info-tips-content"></div>
-                    </div>          
+            <div class="d-none d-xxl-block wrap-tips">                                            
+                <!-- Tips -->
+                <div class="info-tips">
+                    <div class="info-tips-heading">Tips</div>
+                    <div class="info-tips-content">
+                        <div id="map"></div>
+                    </div>
                 </div>
             </div>
         </section>
