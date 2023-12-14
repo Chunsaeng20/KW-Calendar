@@ -229,6 +229,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let Donecnt=localStorage.getItem(clickedDate+'DoneCnt');
         progressbar='0';
         if(!(Todocnt==='0' || Donecnt==='0')){
+            progresspercent=parseInt(progressbar);
             progressbar=String((DoneCnt[clickedDate]/TodoCnt[clickedDate])*100);
             document.getElementById('progress').value=progressbar;
         }
