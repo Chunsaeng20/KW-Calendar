@@ -246,6 +246,7 @@ document.addEventListener('DOMContentLoaded', () => {
             todoList.style.position   = 'static';
             todoList.style.opacity    = 1;
         }, 1000);
+        ProgressUpdate();
         
     }
 
@@ -257,11 +258,11 @@ document.addEventListener('DOMContentLoaded', () => {
         todoList.style.visibility = 'hidden';
         todoList.style.position   = 'absolute';
         todoList.style.opacity    = 0;
+        ProgressUpdate();
     }
 
     // Tips 띄우기
     function showOnTips () {
-        ProgressUpdate();
         let tips = document.querySelector('.info-tips');
         setTimeout(() => {
             tips.style.visibility = 'visible';
