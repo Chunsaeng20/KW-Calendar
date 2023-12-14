@@ -226,10 +226,13 @@ document.addEventListener('DOMContentLoaded', () => {
         let Todocnt=localStorage.getItem(clickedDate+'TodoCnt');
         let Donecnt=localStorage.getItem(clickedDate+'DoneCnt');
         progressbar='0';
-        if(!(Todocnt[clickedDate]==='0' || Donecnt[clickedDate]==='0')){
+        if(!(Todocnt==='0' || Donecnt==='0')){
             progressbar=String((DoneCnt[clickedDate]/TodoCnt[clickedDate])*100);
+            document.getElementById('progress').value=progressbar;
         }
-        document.getElementById('progress').value=progressbar;
+        else{
+            document.getElementById('progress').value='0';
+        }
     }
     // Todo list 띄우기
     function showOnTodolist () {
@@ -302,7 +305,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         localStorage.setItem(clickedDate+delcbInfo,'false'); 
         TodoCnt[clickedDate]--;
-        inputList.removeChild(delParentLi);
 
         if (!DATA[clickedDate] || !Array.isArray(DATA[clickedDate])) {
             DATA[clickedDate] = [];
@@ -310,14 +312,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const cleanToDos = DATA[clickedDate].filter(function (todo) {
             return todo.id !== parseInt(delParentLi.id);
         });
+        inputList.removeChild(delParentLi);
         // 일정이 비면 그날을 배열에서 삭제
-        if(Object.keys(DATA[clickedDate]).length === 0){
-            DATA[clickedDate] = DATA[clickedDate].filter((value)=>{
-                if(value !== clickedDate) return true;
-            });
+        if (cleanToDos.length === 0) {
+            scheduleDate = scheduleDate.filter((value) => value !== clickedDate);
+            DATA[clickedDate]=[];
         }
         else{
-            DATA[clickedDate] = cleanToDos;
+            DATA[clickedDate]=cleanToDos;
         }
         localStorage.setItem(clickedDate+'DoneCnt',DoneCnt[clickedDate]);
         localStorage.setItem(clickedDate+'TodoCnt',TodoCnt[clickedDate]);
@@ -375,6 +377,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const checkbox  = document.createElement('input');
 
         checkbox.setAttribute('type','checkbox');
+        checkbox.setAttribute('class','ckb');
         deleteBtn.setAttribute('class', 'del-data');
         deleteBtn.innerText = "X";
         spanE.innerHTML = text;
@@ -406,7 +409,7 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem(clickedDate+'DoneCnt',DoneCnt[clickedDate]);
         localStorage.setItem(clickedDate+'TodoCnt',TodoCnt[clickedDate]);
         save();
-        updateProgress();
+        ProgressUpdate();
         inputBox.value='';
     }
 
@@ -441,6 +444,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     delbtn.setAttribute('class', 'del-data');
                     cb.setAttribute('type','checkbox');
+                    cb.setAttribute('class','ckb');
                     delbtn.innerText = "X";
                     sp.innerHTML = Todo.todo;
                     li.appendChild(sp);

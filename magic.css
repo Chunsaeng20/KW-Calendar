@@ -2158,4 +2158,20 @@
   background: -webkit-linear-gradient(to right, #93F9B9, #1D976C);
   background: linear-gradient(to right, #93F9B9, #1D976C);
 }
+
+#inputb {
+  background-color: #04AA6D;
+  border: none;
+  color: white;
+  border-radius: 10px;
+}
+
+.del-data{
+  background-color: #ee6ce7;
+  border: none;
+  color: white;
+  border-radius: 3px;
+  height: 25px;
+  font-size:10px;
+}
 /*# sourceMappingURL=magic.css.map */
