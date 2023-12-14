@@ -6,6 +6,9 @@ let scheduleDate = [];
 let TodoCnt={};
 let DoneCnt={};
 let progressbar='0';
+//D-day용 배열
+let D_day_DATA={} ;
+let taskIndex = 0; // Global variable to store task index
 document.addEventListener('DOMContentLoaded', () => {
     // 오늘 날짜 받아오기
     let today = new Date();  
@@ -151,6 +154,47 @@ document.addEventListener('DOMContentLoaded', () => {
             showOnTips();
         }
     });
+    function updateProgress() {
+        let progressContent = document.querySelector('.info-progress-content');
+        let totalTasks = 0;
+        let taskDetails = '';
+        taskIndex =0;
+        // Get D_day_DATA directly
+        const sortedDates = Object.keys(D_day_DATA).sort((a, b) => new Date(a) - new Date(b));
+    
+        for (const date of sortedDates) {
+            if (D_day_DATA[date] && D_day_DATA[date].length > 0) {
+                // For each date, iterate through its Todo List
+                D_day_DATA[date].forEach((todo) => {
+                    if (todo && todo.todo.trim() !== "") {
+                        totalTasks++;
+    
+                        let today = new Date();
+                        let dueDate = new Date(date);
+                        let diffDays = Math.ceil((dueDate - today) / (1000 * 60 * 60 * 24));
+    
+                        // Format the due date as a string
+                        let formattedDueDate = dueDate.toLocaleDateString();
+    
+                        // Determine whether to display 'D+' or 'D-' along with the exact number of days and due date
+                        let daysLabel = diffDays >= 0 ? `D-${diffDays}` : `D+${diffDays*(-1)}`;
+    
+                        // Display task number (taskIndex + 1) along with task details
+                        taskDetails += `${taskIndex + 1}. ${todo.todo.trim()} (${daysLabel}, ${formattedDueDate})<br>`;
+                        taskIndex++; // Increment the global task index
+                    }
+                });
+            }
+        }
+    
+        if (totalTasks > 0) {
+            // Remove the trailing line break from taskDetails
+            taskDetails = taskDetails.replace(/(<br>)$/, "");
+            progressContent.innerHTML = `${taskDetails}`;
+        } else {
+            progressContent.innerHTML = ''; // 할 일 목록이 없을 경우 내용을 지움
+        }
+    }
 
     // -------------------------------------------------------------------------------------------------------
 
@@ -244,7 +288,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // -------------------------------------------------------------------------------------------------------
-
+    function isDdayChecked() {
+        const checkedRadio = document.querySelector('.checkDdayRadio:checked');
+        return checkedRadio && checkedRadio.value === 'yes';
+    }
     // Todo 삭제
     function deleteTodo(E) {
         E.preventDefault();
@@ -297,6 +344,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function InsertTodo(text){
         let todo = {
             todo: text,
+            checkDday: isDdayChecked() ? "Yes" : "No"  // Check if D-day is checked
         }
 
         // 문자열이 없으면 생성
@@ -308,6 +356,17 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             DATA[clickedDate].push(todo);
             TodoCnt[clickedDate]++;
+        }
+
+        if (isDdayChecked() && todo.checkDday === "Yes") {
+            // Save to D_day_DATA if D-day is checked
+            if (!D_day_DATA[clickedDate]) {
+                D_day_DATA[clickedDate] = [];
+            }
+    
+            D_day_DATA[clickedDate].push({
+                todo: todo.todo
+            });
         }
 
         const listE     = document.createElement('li');
@@ -347,6 +406,7 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem(clickedDate+'DoneCnt',DoneCnt[clickedDate]);
         localStorage.setItem(clickedDate+'TodoCnt',TodoCnt[clickedDate]);
         save();
+        updateProgress();
         inputBox.value='';
     }
 
