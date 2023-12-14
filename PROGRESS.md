@@ -25,7 +25,7 @@
 * ~~Todo List(Assignment) 밑에 과제 수행 간에 해야하는 더 작은 분류의 Todo List 추가 및 해당 Todo List check에 따른 과제 수행률 왼쪽 하단 표시 기능 (예정)~~
 * 해당 날짜의 Todo List에 체크박스 추가 및 체크박스 현황에 따른 Todo List와 Done List 수치 save&load 기능 구현([Commit Link](https://github.com/Chunsaeng20/KW-Calendar/commit/17d5c6482568a1e404dab638d9c1e55612b979a2))
 * 해당 날짜의 Todo List, Done List 수치에 따라 진행률 계산하여 progress bar와 연동한 표시 기능([Commit Link](https://github.com/Chunsaeng20/KW-Calendar/commit/17d5c6482568a1e404dab638d9c1e55612b979a2))
-* Todo List 화면의 디자인 수정 (예정)
+* Todo List 화면의 디자인 수정 및 에러 수정 ([Commit Link](https://github.com/Chunsaeng20/KW-Calendar/commit/b1ae306dc8ae9ffd424ed68261c9b7017e0a6554))
 
 ### 정해성
 * 캘린더 웹페이지 틀 작성 ([Commit Link](https://github.com/Chunsaeng20/KW-Calendar/commit/c64fb9852897f507b338f46aa9825cd19363e0c5))
